@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class CalculadoraEurosPesetas {
 
     public static void main(String[] args) {
-        System.out.println("Indica la operación que quieres realizar:");
+        System.out.println("Indica la operacion que quieres realizar:");
         System.out.println("1: convertir euros a pesetas");
         System.out.println("2: convertir pesetas a euros");
         System.out.println("0: salir");
@@ -22,14 +22,21 @@ public class CalculadoraEurosPesetas {
         
         switch(opcion){
             case 1 -> {
-                System.out.println("Introduce cantidad de €: ");
-                double euros = sc.nextDouble();
+                System.out.println("Introduce cantidad de euros: ");
+                int euros = sc.nextInt();
                 System.out.println(calculadoraEuroPeseta(euros)+" pesetas.");
             }
             case 2 -> {
                 System.out.println("Introduce cantidad de pesetas: ");
-                double pesetas = sc.nextDouble();
+                int pesetas = sc.nextInt();
                 System.out.println(calculadoraPesetaEuro(pesetas)+" euros.");
+            }
+            case 0 -> {
+                System.out.println("Ha seleccionado la opción de salir... hasta la proxima");
+                break;
+            }
+            default -> {
+                System.out.println("Debes introducir un valor valido");
             }
                 
         }
