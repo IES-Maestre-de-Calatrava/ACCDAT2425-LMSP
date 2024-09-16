@@ -12,8 +12,8 @@ package com.lmsp.mvc.modelo;
  * Created on 13 sept 2024
  */
 public class ConversorEurosPesetas extends Conversor{
-    public ConversorEurosPesetas(){
-        super(166.386D);
+    public ConversorEurosPesetas(int comision){
+        super(166.386D, comision);
     }
     /**
      * Método para convertir de euros a pesetas

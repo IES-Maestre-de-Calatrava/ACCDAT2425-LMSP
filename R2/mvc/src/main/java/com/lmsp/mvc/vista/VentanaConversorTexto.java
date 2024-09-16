@@ -6,8 +6,6 @@
 package com.lmsp.mvc.vista;
 
 import com.lmsp.mvc.controlador.ControlConversor;
-import java.util.Scanner;
-import com.lmsp.mvc.modelo.ConversorEurosPesetas;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,8 +54,19 @@ public class VentanaConversorTexto implements InterfazVista{
             s = in.readLine();
             return Double.parseDouble(s);
         } catch (IOException | NumberFormatException e) {
-            System.out.println("Error en formato del número, tiene que ser 99.99: ");
+            System.out.println("Error en formato del numero, tiene que ser 99.99: ");
             return leeCantidad();
+        }
+    }
+    private int leeComision(){
+        String s = null;
+        System.out.println("Introduce la comision que va a aplicar (formato en tanto por ciento(entero)): ");
+        try {
+            s = in.readLine();
+            return Integer.parseInt(s);
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Error en formato del numero, tiene que ser un entero: ");
+            return leeComision();
         }
     }
 
@@ -65,7 +74,7 @@ public class VentanaConversorTexto implements InterfazVista{
      * Muestra el menú con las opciones
      */
     private void solicitaOperacion() {
-        System.out.println("Indica la operación que quiere realizar:");
+        System.out.println("Indica la operacion que quiere realizar:");
         System.out.println("1: convertir pesetas a euros");
         System.out.println("2: convertir euros a pesetas");
         System.out.println("0: salir");
@@ -76,11 +85,12 @@ public class VentanaConversorTexto implements InterfazVista{
      */
     private void procesaNuevaOperacion() {
         int operacion;
+        int comision;
         solicitaOperacion();
         operacion = leeOpcion();
         switch (operacion) {
             case 0 -> {
-                System.out.println("Adiós.");
+                System.out.println("Adios.");
                 System.exit(0);
             }
             case 1 -> controlador.actionPerformed(new ActionEvent(this, operacion, AEUROS));
@@ -111,6 +121,10 @@ public class VentanaConversorTexto implements InterfazVista{
     public double getCantidad() {
         System.out.print("Cantidad a convertir (formato 99.99): ");
         return leeCantidad();
+    }
+    @Override
+    public int getComision() {
+        return leeComision();
     }
 
     @Override

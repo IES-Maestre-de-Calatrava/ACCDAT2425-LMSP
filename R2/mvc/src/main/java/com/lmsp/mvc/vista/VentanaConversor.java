@@ -25,6 +25,7 @@ public class VentanaConversor extends JFrame implements InterfazVista{
     private final JButton convertirApesetas;
     private final JButton convertirAeuros;
     private final JTextField cantidad;
+    private final JTextField comision;
     private final JLabel resultado;
 
     /**
@@ -36,8 +37,10 @@ public class VentanaConversor extends JFrame implements InterfazVista{
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BorderLayout(10, 10));
         cantidad = new JTextField(8);
+        comision = new JTextField(8);
         JPanel panelaux = new JPanel();
         panelaux.add(cantidad);
+        panelaux.add(comision);
         panelPrincipal.add(panelaux, BorderLayout.NORTH);
         resultado = new JLabel("Indique una cantidad y pulse uno de los botones");
         JPanel panelaux2 = new JPanel();
@@ -84,6 +87,15 @@ public class VentanaConversor extends JFrame implements InterfazVista{
     @Override
     public void escribeCambio(String s) {
         this.resultado.setText(s);
+    }
+
+    @Override
+    public int getComision() {
+        try{
+            return Integer.parseInt(comision.getText());
+        } catch (NumberFormatException e){
+            return 0;
+        }
     }
    
 }

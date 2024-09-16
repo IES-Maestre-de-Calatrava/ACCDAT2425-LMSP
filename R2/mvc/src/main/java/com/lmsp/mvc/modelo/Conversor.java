@@ -16,10 +16,11 @@ public class Conversor {
         Cantidad de la moneda destino a la cual equivale 1€
     */
     private final double cambio;
-    private final double comision= 0.03;
+    private final double comision;
 
-    public Conversor(double cambio) {
+    public Conversor(double cambio, double comision) {
         this.cambio = cambio;
+        this.comision = comision;
     }
     /**
      * Convierte los euros a una moneda cualquiera utilizando el cambio
@@ -39,6 +40,6 @@ public class Conversor {
         
     }
     public double restaComision(double total){
-        return total-(total * comision);
+        return total-(total * (comision/100));
     }
 }
