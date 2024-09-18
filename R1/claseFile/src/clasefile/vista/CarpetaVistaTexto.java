@@ -81,7 +81,9 @@ public class CarpetaVistaTexto implements InterfazVista{
                 System.exit(0);
             }
             case 1 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONRUTACOMPLETA));
+            default -> operacionIncorrecta();
         }
+        procesaNuevaOperacion();
     }
 
     /**

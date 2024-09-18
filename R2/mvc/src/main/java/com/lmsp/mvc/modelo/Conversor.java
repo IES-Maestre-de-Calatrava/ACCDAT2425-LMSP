@@ -27,7 +27,7 @@ public class Conversor {
      * @return Cantidad equivalente en la moneda destino
      */
     public double eurosAmoneda(double cantidad, double comision){
-        return ((cantidad*cambio)-((cantidad*cambio)*(100/comision)));
+        return (cantidad*cambio-((cantidad*cambio)*(comision/100)));
     }
     /**
      * Convierte la moneda destino a euros
@@ -35,7 +35,7 @@ public class Conversor {
      * @return Cantidad equivalente en euros
      */
      public double monedaAeuros(double cantidad, double comision){
-        return ((cantidad/cambio)-((cantidad/cambio)*(100/comision)));
+        return (cantidad/cambio-((cantidad/cambio)*(comision/100)));
         
     }
 }
