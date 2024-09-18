@@ -12,23 +12,23 @@ package com.lmsp.mvc.modelo;
  * Created on 13 sept 2024
  */
 public class ConversorEurosPesetas extends Conversor{
-    public ConversorEurosPesetas(int comision){
-        super(166.386D, comision);
+    public ConversorEurosPesetas(){
+        super(166.386D);
     }
     /**
      * Método para convertir de euros a pesetas
      * @param cantidad Cantidad de euros a convertir
      * @return Cantidad de pesetas
      */
-    public double eurosApesetas(double cantidad){
-        return eurosAmoneda(cantidad);
+    public double eurosApesetas(double cantidad, double comision){
+        return eurosAmoneda(cantidad, comision);
     }
      /**
      * Método para convertir de pesetas a euros
      * @param cantidad Cantidad de pesetas a convertir
      * @return Cantidad de euros
      */
-    public double pesetaAeuros(double cantidad){
-        return monedaAeuros(cantidad);
+    public double pesetaAeuros(double cantidad,double comision){
+        return monedaAeuros(cantidad, comision);
     }
 }

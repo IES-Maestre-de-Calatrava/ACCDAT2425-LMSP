@@ -33,14 +33,15 @@ public class ControlConversor implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent evento) {
         double cantidad = vista.getCantidad();
-        vista.getComision();
+        double comision = vista.getComision();
         switch (evento.getActionCommand()){
             case InterfazVista.AEUROS -> vista.escribeCambio(cantidad +
-                    " pesetas son: " + modelo.pesetaAeuros(cantidad) + " euros");
+                    " pesetas son: " + modelo.pesetaAeuros(cantidad, comision) + " euros");
             case InterfazVista.APESETAS -> vista.escribeCambio(cantidad +
-                    " euros son: " + modelo.eurosApesetas(cantidad) + " pesetas");
+                    " euros son: " + modelo.eurosApesetas(cantidad, comision) + " pesetas");
             default -> vista.escribeCambio("Error en la conversion");
         }
+        vista.getComision();
     }
 
 }

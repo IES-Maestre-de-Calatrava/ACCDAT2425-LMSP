@@ -58,14 +58,14 @@ public class VentanaConversorTexto implements InterfazVista{
             return leeCantidad();
         }
     }
-    private int leeComision(){
+    private double leeComision(){
         String s = null;
-        System.out.println("Introduce la comision que va a aplicar (formato en tanto por ciento(entero)): ");
+        System.out.println("Introduce la comision que va a aplicar: ");
         try {
             s = in.readLine();
-            return Integer.parseInt(s);
+            return Double.parseDouble(s);
         } catch (IOException | NumberFormatException e) {
-            System.out.println("Error en formato del numero, tiene que ser un entero: ");
+            System.out.println("Error en formato: ");
             return leeComision();
         }
     }
@@ -85,7 +85,7 @@ public class VentanaConversorTexto implements InterfazVista{
      */
     private void procesaNuevaOperacion() {
         int operacion;
-        int comision;
+        double comision;
         solicitaOperacion();
         operacion = leeOpcion();
         switch (operacion) {
@@ -123,7 +123,7 @@ public class VentanaConversorTexto implements InterfazVista{
         return leeCantidad();
     }
     @Override
-    public int getComision() {
+    public double getComision() {
         return leeComision();
     }
 

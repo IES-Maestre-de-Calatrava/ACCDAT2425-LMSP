@@ -16,30 +16,26 @@ public class Conversor {
         Cantidad de la moneda destino a la cual equivale 1€
     */
     private final double cambio;
-    private final double comision;
+    private double comision;
 
-    public Conversor(double cambio, double comision) {
+    public Conversor(double cambio) {
         this.cambio = cambio;
-        this.comision = comision;
     }
     /**
      * Convierte los euros a una moneda cualquiera utilizando el cambio
      * @param cantidad Cantidad de euros que queremos pasar a la nueva moneda
      * @return Cantidad equivalente en la moneda destino
      */
-    public double eurosAmoneda(double cantidad){
-        return restaComision(cantidad*cambio);
+    public double eurosAmoneda(double cantidad, double comision){
+        return ((cantidad*cambio)-((cantidad*cambio)*(100/comision)));
     }
     /**
      * Convierte la moneda destino a euros
      * @param cantidad Cantidad de moneda destino que queremos pasar a euros
      * @return Cantidad equivalente en euros
      */
-     public double monedaAeuros(double cantidad){
-        return restaComision(cantidad/cambio);
+     public double monedaAeuros(double cantidad, double comision){
+        return ((cantidad/cambio)-((cantidad/cambio)*(100/comision)));
         
-    }
-    public double restaComision(double total){
-        return total-(total * (comision/100));
     }
 }

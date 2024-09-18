@@ -17,7 +17,7 @@ public interface InterfazVista {
     void setControlador(ControlConversor c);
     void arranca();
     double getCantidad();
-    int getComision();
+    double getComision();
     void escribeCambio(String s);
     /*
         Constantes para las operaciones

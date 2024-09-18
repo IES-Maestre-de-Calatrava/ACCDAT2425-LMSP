@@ -90,11 +90,11 @@ public class VentanaConversor extends JFrame implements InterfazVista{
     }
 
     @Override
-    public int getComision() {
+    public double getComision() {
         try{
-            return Integer.parseInt(comision.getText());
+            return Double.parseDouble(comision.getText());
         } catch (NumberFormatException e){
-            return 0;
+            return 0.0D;
         }
     }
    

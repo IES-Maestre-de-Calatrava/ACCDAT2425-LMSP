@@ -7,7 +7,7 @@ package com.lmsp.mvc;
 import com.lmsp.mvc.controlador.ControlConversor;
 import com.lmsp.mvc.modelo.ConversorEurosPesetas;
 import com.lmsp.mvc.vista.InterfazVista;
-import com.lmsp.mvc.vista.VentanaConversor;
+import com.lmsp.mvc.vista.VentanaConversorTexto;
 
 /**
  *
@@ -16,8 +16,8 @@ import com.lmsp.mvc.vista.VentanaConversor;
 public class Mvc {
 
     public static void main(String[] args) {
-        InterfazVista vista = new VentanaConversor();
-        ConversorEurosPesetas modelo = new ConversorEurosPesetas(vista.getComision());
+        InterfazVista vista = new VentanaConversorTexto();
+        ConversorEurosPesetas modelo = new ConversorEurosPesetas();
         ControlConversor control = new ControlConversor(vista, modelo);
     }
 }
