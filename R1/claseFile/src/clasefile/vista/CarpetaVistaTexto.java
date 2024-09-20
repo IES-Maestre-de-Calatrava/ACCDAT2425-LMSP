@@ -33,7 +33,12 @@ public class CarpetaVistaTexto implements InterfazVista{
 
     @Override
     public String getRuta() {
-        System.out.println("Introduce la ruta");
+        System.out.println("Introduce la ruta: ");
+        return leeString();
+    }
+    @Override
+    public String getNombre() {
+        System.out.println("Introduce el nombre de la nueva carpeta: ");
         return leeString();
     }
     
@@ -64,7 +69,12 @@ public class CarpetaVistaTexto implements InterfazVista{
      */
     private void solicitaOperacion() {
         System.out.println("Indica la operacion que quiere realizar:");
-        System.out.println("1: crear carpeta");
+        System.out.println("1: crear carpeta pasando la ruta completa");
+        System.out.println("2: crear carpeta pasando la ruta padre y el nombre de la carpeta");
+        System.out.println("3: crear carpeta pasando un File y el nombre de la carpeta");
+        //System.out.println("4: crear archivo pasando la ruta completa");
+       // System.out.println("5: crear archivo pasando la ruta padre y el nombre del archivo");
+      //  System.out.println("6: crear archivo pasando un File y el nombre del archivo");
         System.out.println("0: salir");
     }
 
@@ -81,6 +91,11 @@ public class CarpetaVistaTexto implements InterfazVista{
                 System.exit(0);
             }
             case 1 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONRUTACOMPLETA));
+            case 2 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONRUTAPADREYNOMBRE));
+            case 3 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONFILEPADREYNOMBRE));
+           // case 4 -> controladora.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVOCONRUTACOMPLETA));
+           // case 5 -> controladora.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVOCONRUTAPADREYNOMBRE));
+           // case 6 -> controladora.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVOCONFILEPADREYNOMBRE));
             default -> operacionIncorrecta();
         }
         procesaNuevaOperacion();

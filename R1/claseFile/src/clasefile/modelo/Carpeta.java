@@ -32,6 +32,14 @@ public class Carpeta {
     public String getRuta() {
         return ruta;
     }
+    /**
+     * Devuelve un File la ruta de la carpeta
+     * @return File que apunta a la carpeta
+     */
+    public File getFileDeRuta(){
+        File directorioRaiz = new File(ruta);
+        return directorioRaiz;
+    }
 
     public void setRuta(String ruta) {
         this.ruta = ruta;
@@ -43,5 +51,34 @@ public class Carpeta {
     public void crearCarpeta(){
        File directorioNuevo = new File(ruta);
        directorioNuevo.mkdir();
+    }
+    /**
+     * Crea un directorio en la ruta indicada
+     * utiliza el constructor al cual le pasamos la ruta del directorio padre 
+     * y el nombre del nuevo directorio
+     * 
+     * @param nombreDirectorio Nombre del nuevo directorio
+     */
+    public void crearCarpeta(String nombreDirectorio){
+        File directorioNuevo = new File(ruta, nombreDirectorio);
+        if (!directorioNuevo.exists()){
+            directorioNuevo.mkdir();
+        }else{
+            System.out.println("Ya existe ese directorio");
+        }
+        
+    }
+    /**
+     * Crea un directorio en ruta indicada utilizando File y nombre
+     * @param directorioRaiz File con ruta
+     * @param nombreDirectorio Nombre del nuevo directorio
+     */
+    public void crearCarpeta(File directorioRaiz, String nombreDirectorio){
+        File directorioNuevo = new File(directorioRaiz, nombreDirectorio);
+        if (!directorioNuevo.exists()){
+            directorioNuevo.mkdir();
+        }else{
+            System.out.println("Ya existe ese directorio");
+        }
     }
 }
