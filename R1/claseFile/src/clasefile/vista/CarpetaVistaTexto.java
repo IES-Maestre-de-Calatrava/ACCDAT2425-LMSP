@@ -5,6 +5,7 @@
 
 package clasefile.vista;
 
+import clasefile.controlador.ControlArchivo;
 import clasefile.controlador.ControlCarpeta;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
@@ -19,11 +20,16 @@ import java.io.InputStreamReader;
  */
 public class CarpetaVistaTexto implements InterfazVista{
     private ControlCarpeta controlador;
+    private ControlArchivo controladorA;
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
     @Override
     public void setControlador(ControlCarpeta c) {
         this.controlador = c;
+    }
+    @Override
+    public void setControladorArchivo(ControlArchivo ca) {
+        this.controladorA = ca;
     }
 
     @Override
@@ -72,6 +78,8 @@ public class CarpetaVistaTexto implements InterfazVista{
         System.out.println("1: crear carpeta pasando la ruta completa");
         System.out.println("2: crear carpeta pasando la ruta padre y el nombre de la carpeta");
         System.out.println("3: crear carpeta pasando un File y el nombre de la carpeta");
+        System.out.println("4: mostrar contenido de un directorio");
+        System.out.println("5: borrar archivos de un directorio");
         //System.out.println("4: crear archivo pasando la ruta completa");
        // System.out.println("5: crear archivo pasando la ruta padre y el nombre del archivo");
       //  System.out.println("6: crear archivo pasando un File y el nombre del archivo");
@@ -93,6 +101,8 @@ public class CarpetaVistaTexto implements InterfazVista{
             case 1 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONRUTACOMPLETA));
             case 2 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONRUTAPADREYNOMBRE));
             case 3 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONFILEPADREYNOMBRE));
+            case 4 -> controlador.actionPerformed(new ActionEvent(this, operacion, MUESTRA));
+            case 5 -> controladorA.actionPerformed(new ActionEvent(this, operacion, BORRA));
            // case 4 -> controladora.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVOCONRUTACOMPLETA));
            // case 5 -> controladora.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVOCONRUTAPADREYNOMBRE));
            // case 6 -> controladora.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVOCONFILEPADREYNOMBRE));

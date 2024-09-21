@@ -5,7 +5,9 @@
 
 package clasefile;
 
+import clasefile.controlador.ControlArchivo;
 import clasefile.controlador.ControlCarpeta;
+import clasefile.modelo.Archivo;
 import clasefile.modelo.Carpeta;
 import clasefile.vista.CarpetaVistaTexto;
 import clasefile.vista.InterfazVista;
@@ -24,6 +26,8 @@ public class ClaseFile {
     public static void main(String[] args) {
         InterfazVista vista = new CarpetaVistaTexto();
         Carpeta modelo = new Carpeta();
+        Archivo modeloA = new Archivo();
         ControlCarpeta control = new ControlCarpeta(vista, modelo);
+        ControlArchivo controlA = new ControlArchivo(vista, modeloA);
     }
 }
