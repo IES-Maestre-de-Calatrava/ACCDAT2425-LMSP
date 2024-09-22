@@ -28,7 +28,7 @@ public class CarpetaVistaTexto implements InterfazVista{
         this.controlador = c;
     }
     @Override
-    public void setControladorArchivo(ControlArchivo ca) {
+    public void setControlador(ControlArchivo ca) {
         this.controladorA = ca;
     }
 
@@ -79,11 +79,11 @@ public class CarpetaVistaTexto implements InterfazVista{
         System.out.println("2: crear carpeta pasando la ruta padre y el nombre de la carpeta");
         System.out.println("3: crear carpeta pasando un File y el nombre de la carpeta");
         System.out.println("4: mostrar contenido de un directorio");
-        System.out.println("5: borrar archivos de un directorio");
-        //System.out.println("4: crear archivo pasando la ruta completa");
-       // System.out.println("5: crear archivo pasando la ruta padre y el nombre del archivo");
-      //  System.out.println("6: crear archivo pasando un File y el nombre del archivo");
-        System.out.println("0: salir");
+        System.out.println("5: borrar archivos de un directorio"); 
+        System.out.println("6: Renombrar archivo indicando la ruta y el nombre del archivo nuevo");
+        System.out.println("7: Copia archivo indicando ruta nueva");
+        System.out.println("8: Eliminar directorios y archivos");
+        System.out.println("0: Salir");
     }
 
     /**
@@ -101,11 +101,18 @@ public class CarpetaVistaTexto implements InterfazVista{
             case 1 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONRUTACOMPLETA));
             case 2 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONRUTAPADREYNOMBRE));
             case 3 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONFILEPADREYNOMBRE));
-            case 4 -> controlador.actionPerformed(new ActionEvent(this, operacion, MUESTRA));
-            case 5 -> controladorA.actionPerformed(new ActionEvent(this, operacion, BORRA));
-           // case 4 -> controladora.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVOCONRUTACOMPLETA));
-           // case 5 -> controladora.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVOCONRUTAPADREYNOMBRE));
-           // case 6 -> controladora.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVOCONFILEPADREYNOMBRE));
+            case 4 -> controlador.actionPerformed(new ActionEvent(this, operacion, MUESTRATODO));
+            case 5 -> {
+                if (controladorA != null) {
+                    controladorA.actionPerformed(new ActionEvent(this, operacion, ELIMINARARCHIVO));
+                } else {
+                    System.out.println("ControlArchivo no esta inicializado.");
+                    operacionIncorrecta();  
+                }
+            }    
+            case 6 -> controladorA.actionPerformed(new ActionEvent(this, operacion,RENOMBRARARCHIVO));
+            case 7 -> controladorA.actionPerformed(new ActionEvent(this, operacion,COPIARARCHIVO));
+            case 8 -> controlador.actionPerformed(new ActionEvent(this, operacion,BORRATODO));
             default -> operacionIncorrecta();
         }
         procesaNuevaOperacion();

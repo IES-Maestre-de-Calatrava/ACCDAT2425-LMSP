@@ -105,4 +105,23 @@ public class Carpeta {
         }
         
     }
+    public void eliminarContenidoCarpeta(String rutaDirectorio) {
+        File directorio = new File(rutaDirectorio);
+        
+        if (!directorio.exists() || !directorio.isDirectory()) {
+            System.out.println("El directorio especificado no existe o no es un directorio.");
+        }
+
+        File[] archivos = directorio.listFiles();
+        if (archivos != null) {
+            for (File archivo : archivos) {
+                if (archivo.isDirectory()) {
+                    eliminarContenidoCarpeta(archivo.getAbsolutePath()); //Lo llamo recursivamente por si hay subdirectorios
+                }
+                if (!archivo.delete()) { //Si devuelve false es que no se ha podido eliminar
+                    System.out.println("No se pudo eliminar: " + archivo.getAbsolutePath());
+                }
+            }
+        }
+    }
 }

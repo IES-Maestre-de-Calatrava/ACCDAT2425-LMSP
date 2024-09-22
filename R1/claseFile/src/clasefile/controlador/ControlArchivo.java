@@ -8,6 +8,7 @@ import clasefile.modelo.Archivo;
 import clasefile.vista.InterfazVista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  *
@@ -20,7 +21,7 @@ public class ControlArchivo implements ActionListener{
         this.vista = vista;
         this.modelo = modelo;
         
-        this.vista.setControladorArchivo(this);
+        this.vista.setControlador(this);
         this.vista.arranca();
     }
 
@@ -28,10 +29,24 @@ public class ControlArchivo implements ActionListener{
     public void actionPerformed(ActionEvent evento) {
         String nombre = vista.getNombre();
         String ruta = vista.getRuta();
-        modelo.setRutaCarpeta(ruta);
+        modelo.setRuta(ruta);
         switch(evento.getActionCommand()){
-            case InterfazVista.BORRA ->{
-                modelo.borraArchivo(nombre);
+           case InterfazVista.ELIMINARARCHIVO -> {  
+                modelo.borrarArchivo(ruta);
+            }
+            
+            case InterfazVista.RENOMBRARARCHIVO -> {
+                modelo.renombrarArchivo(ruta, nombre);
+            }
+            
+            case InterfazVista.COPIARARCHIVO -> {
+                String rutaNueva = vista.getRuta();
+                try {
+                    modelo.copiarArchivo(ruta, rutaNueva);
+                } catch (IOException e){
+                    e.getMessage();
+                }
+                
             }
           
         }

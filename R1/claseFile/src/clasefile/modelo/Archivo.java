@@ -7,6 +7,7 @@ package clasefile.modelo;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  *
@@ -15,17 +16,17 @@ import java.io.IOException;
  * Created on 20 sept 2024
  */
 public class Archivo{
-    private String rutaCarpeta;
+    private String ruta;
 
-    public Archivo(String rutaCarpeta) {
-        this.rutaCarpeta = rutaCarpeta;
+    public Archivo(String ruta) {
+        this.ruta = ruta;
     }
     
     public Archivo(){
     }
 
-    public void setRutaCarpeta(String rutaCarpeta) {
-        this.rutaCarpeta = rutaCarpeta;
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
     
     /*public void crearArchivo() throws IOException{
@@ -38,19 +39,83 @@ public class Archivo{
     }*/
 
     public void crearArchivo(String nombreArchivo) throws IOException {
-        File archivo = new File(rutaCarpeta + "/" + nombreArchivo);
+        File archivo = new File(ruta + "/" + nombreArchivo);
         if (!archivo.exists()) {
             archivo.createNewFile();
-            System.out.println("Archivo creado correctamente"); // + archivo.getAbsolutePath());
+            System.out.println("Archivo creado correctamente."); // + archivo.getAbsolutePath());
         } else {
-            System.out.println("Error al crear el archivo.");
+            System.out.println("Error al crear el archivo, ya existe uno con ese nombre");
         }
     }
-    public void borraArchivo (String nombre){
-        File archivo = new File(this.rutaCarpeta+ "/" + nombre);
+    public void borrarArchivo (String nombre){
+        File archivo = new File(this.ruta+ "/" + nombre);
         if(archivo.isFile() && archivo.exists()){
             archivo.delete();
+        }else{
+            if(archivo.isDirectory()){
+                File[] lista = archivo.listFiles();
+                if(lista != null){
+                    for (File file : lista){
+                        if(file.isFile()){
+                            file.delete();
+                            System.out.println("Archivo " + file.getName() + " eliminado");
+                        }
+                    }
+                }
+                System.out.println("Borrando directorio...");
+                archivo.delete();
+            }
         }
     }
+    public void renombrarArchivo(String ruta, String nombreNuevo){
+        File archivo = new File(ruta);
+        File archivoNuevo = new File(archivo.getParent(),nombreNuevo);
+        if(archivo.isFile()){
+            boolean exito = archivo.renameTo(archivoNuevo);
+            if(exito){
+                System.out.println("El archivo se ha renombrado con exito");
+            }
+            else{
+            System.out.println("No se ha podido renombrar el archivo");
+             }
+        }
+        else{
+            System.out.println("El archivo especificado no existe");
+        }
+    }
+    /**
+     * Copia un archivo de una ruta a otra.
+     *
+     * @param ruta La ruta del archivo a copiar.
+     * @param rutaDestino La ruta de destino donde se copiará el archivo.
+     * @throws IOException Si ocurre un error durante la copia del archivo.
+     */
+    public void copiarArchivo(String ruta, String rutaDestino) throws IOException{
+        File archivo = new File(ruta);
+        File archivoDestino = new File(rutaDestino);
+        
+        if(!archivo.exists()){
+            throw new IOException("El archivo no existe");
+        }
+        
+        if(!archivoDestino.exists()){
+            archivoDestino.createNewFile();
+        }
+        Files.copy(archivo.toPath(), archivoDestino.toPath());
+    }
+    /**
+     * Mueve un archivo de una ruta a otra.
+     *
+     * @param rutaOrigen La ruta del archivo a mover.
+     * @param rutaDestino La ruta de destino donde se moverá el archivo.
+     */
+    public void moverArchivo(String rutaOrigen, String rutaDestino) {
+        File origen = new File(rutaOrigen);
+        File destino = new File(rutaDestino);
+        destino.getParentFile().mkdirs();   
+        origen.renameTo(destino);
+    }
+        
+
 
 }

@@ -17,7 +17,7 @@ import clasefile.controlador.ControlCarpeta;
  */
 public interface InterfazVista {
     void setControlador(ControlCarpeta c);
-    void setControladorArchivo(ControlArchivo ca);
+    void setControlador(ControlArchivo ca);
     void arranca();
     String getRuta();
     String getNombre();
@@ -25,8 +25,11 @@ public interface InterfazVista {
     static final String CREARCARPETACONRUTACOMPLETA = "Crea carpeta recibiendo la ruta completa";
     static final String CREARCARPETACONRUTAPADREYNOMBRE = "Crea carpeta recibiendo la ruta del padre";
     static final String CREARCARPETACONFILEPADREYNOMBRE = "Crea carpeta recibiendo un File y el nombre";
-    static final String MUESTRA = "Muestra contenido de directorio";
-    static final String BORRA = "Borra contenido de directorio";
+    static final String MUESTRATODO = "Muestra contenido de directorio";
+    static final String ELIMINARARCHIVO = "Elimina archivo o archivos de un directorio";
+    static final String RENOMBRARARCHIVO = "Rrenombra un archivo";
+    static final String COPIARARCHIVO = "Copia archivo en la ruta especificada";
+    static final String BORRATODO = "Borra contenido de directorio";
     
     //static final String CREARARCHIVOCONRUTACOMPLETA = "Crea archivo recibiendo la ruta completa";
     //static final String CREARARCHIVOCONRUTAPADREYNOMBRE = "Crea archivo recibiendo la ruta del padre";
