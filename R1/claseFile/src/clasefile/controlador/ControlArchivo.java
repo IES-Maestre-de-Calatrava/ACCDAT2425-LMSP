@@ -22,7 +22,6 @@ public class ControlArchivo implements ActionListener{
         this.modelo = modelo;
         
         this.vista.setControlador(this);
-        this.vista.arranca();
     }
 
     @Override

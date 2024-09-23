@@ -29,5 +29,6 @@ public class ClaseFile {
         Archivo modeloA = new Archivo();
         ControlCarpeta control = new ControlCarpeta(vista, modelo);
         ControlArchivo controlA = new ControlArchivo(vista, modeloA);
+        vista.arranca();
     }
 }

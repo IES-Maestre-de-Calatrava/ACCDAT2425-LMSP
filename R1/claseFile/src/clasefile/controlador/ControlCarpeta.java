@@ -26,7 +26,7 @@ public class ControlCarpeta implements ActionListener {
         this.modelo = modelo;
         
         this.vista.setControlador(this);
-        this.vista.arranca();
+        
     }
 
     @Override

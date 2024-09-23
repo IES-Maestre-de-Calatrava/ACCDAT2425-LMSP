@@ -25,10 +25,11 @@ public interface InterfazVista {
     static final String CREARCARPETACONRUTACOMPLETA = "Crea carpeta recibiendo la ruta completa";
     static final String CREARCARPETACONRUTAPADREYNOMBRE = "Crea carpeta recibiendo la ruta del padre";
     static final String CREARCARPETACONFILEPADREYNOMBRE = "Crea carpeta recibiendo un File y el nombre";
-    static final String MUESTRATODO = "Muestra contenido de directorio";
-    static final String ELIMINARARCHIVO = "Elimina archivo o archivos de un directorio";
+    static final String CREARARCHIVO = "Crea un archivo";
+    static final String ELIMINARARCHIVO = "Elimina archivo de un directorio";
     static final String RENOMBRARARCHIVO = "Rrenombra un archivo";
     static final String COPIARARCHIVO = "Copia archivo en la ruta especificada";
+    static final String MUESTRATODO = "Muestra contenido de directorio";
     static final String BORRATODO = "Borra contenido de directorio";
     
     //static final String CREARARCHIVOCONRUTACOMPLETA = "Crea archivo recibiendo la ruta completa";
