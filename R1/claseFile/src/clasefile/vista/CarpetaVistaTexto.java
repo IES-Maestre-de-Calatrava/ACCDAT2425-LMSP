@@ -44,7 +44,7 @@ public class CarpetaVistaTexto implements InterfazVista{
     }
     @Override
     public String getNombre() {
-        System.out.println("Introduce el nombre de la nueva carpeta: ");
+        System.out.println("Introduce el nombre: ");
         return leeString();
     }
     
@@ -81,6 +81,7 @@ public class CarpetaVistaTexto implements InterfazVista{
         System.out.println("4: crear archivo"); 
         System.out.println("5: renombrar archivo indicando la ruta y el nombre del archivo nuevo");
         System.out.println("6: copia archivo indicando ruta nueva");
+        
         System.out.println("7: mostrar contenido de un directorio");
         System.out.println("8: eliminar directorios y archivos");
         System.out.println("0: Salir");
@@ -101,18 +102,11 @@ public class CarpetaVistaTexto implements InterfazVista{
             case 1 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONRUTACOMPLETA));
             case 2 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONRUTAPADREYNOMBRE));
             case 3 -> controlador.actionPerformed(new ActionEvent(this, operacion, CREARCARPETACONFILEPADREYNOMBRE));
-            case 4 -> {
-                if (controladorA != null) {
-                    controladorA.actionPerformed(new ActionEvent(this, operacion, ELIMINARARCHIVO));
-                } else {
-                    System.out.println("ControlArchivo no esta inicializado.");
-                    operacionIncorrecta();  
-                }
-            }    
-            case 5 -> controladorA.actionPerformed(new ActionEvent(this, operacion,RENOMBRARARCHIVO));
-            case 6 -> controladorA.actionPerformed(new ActionEvent(this, operacion,COPIARARCHIVO));
+            case 4 -> controladorA.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVO));  
+            case 5 -> controladorA.actionPerformed(new ActionEvent(this, operacion, RENOMBRARARCHIVO));
+            case 6 -> controladorA.actionPerformed(new ActionEvent(this, operacion, COPIARARCHIVO));
             case 7 -> controlador.actionPerformed(new ActionEvent(this, operacion, MUESTRATODO));
-            case 8 -> controlador.actionPerformed(new ActionEvent(this, operacion,BORRATODO));
+            case 8 -> controlador.actionPerformed(new ActionEvent(this, operacion, BORRATODO));
             default -> operacionIncorrecta();
         }
         procesaNuevaOperacion();

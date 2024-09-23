@@ -38,11 +38,16 @@ public class Archivo{
         }
     }*/
 
-    public void crearArchivo(String nombreArchivo) throws IOException {
+    public void crearArchivo(String nombreArchivo){
         File archivo = new File(ruta + "/" + nombreArchivo);
         if (!archivo.exists()) {
-            archivo.createNewFile();
-            System.out.println("Archivo creado correctamente."); // + archivo.getAbsolutePath());
+            try {
+                archivo.createNewFile();
+                System.out.println("Archivo creado correctamente.");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+             // + archivo.getAbsolutePath());
         } else {
             System.out.println("Error al crear el archivo, ya existe uno con ese nombre");
         }

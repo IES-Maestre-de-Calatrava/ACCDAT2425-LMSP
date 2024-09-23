@@ -17,6 +17,7 @@ import java.io.IOException;
 public class ControlArchivo implements ActionListener{
     private final InterfazVista vista;
     private final Archivo modelo;
+    
     public ControlArchivo(InterfazVista vista, Archivo modelo){
         this.vista = vista;
         this.modelo = modelo;
@@ -26,16 +27,21 @@ public class ControlArchivo implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent evento) {
-        String nombre = vista.getNombre();
         String ruta = vista.getRuta();
         modelo.setRuta(ruta);
+        
         switch(evento.getActionCommand()){
-           case InterfazVista.ELIMINARARCHIVO -> {  
+            case InterfazVista.CREARARCHIVO -> {
+                String nombre = vista.getNombre();
+                modelo.crearArchivo(nombre);
+            }
+            case InterfazVista.ELIMINARARCHIVO -> {  
                 modelo.borrarArchivo(ruta);
             }
             
             case InterfazVista.RENOMBRARARCHIVO -> {
-                modelo.renombrarArchivo(ruta, nombre);
+                String nombreNuevo = vista.getNombre();
+                modelo.renombrarArchivo(ruta, nombreNuevo);
             }
             
             case InterfazVista.COPIARARCHIVO -> {

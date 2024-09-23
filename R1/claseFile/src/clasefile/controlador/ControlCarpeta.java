@@ -47,7 +47,7 @@ public class ControlCarpeta implements ActionListener {
                 modelo.crearCarpeta(modelo.getFileDeRuta(), nombre);
             }
             case InterfazVista.MUESTRATODO ->{
-                modelo.muestraContenidoCarpeta(ruta);
+                modelo.muestraContenidoCarpeta();
             }
             case InterfazVista.BORRATODO ->{
                 modelo.eliminarContenidoCarpeta(ruta);

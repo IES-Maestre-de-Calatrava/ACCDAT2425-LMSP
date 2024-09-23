@@ -81,12 +81,12 @@ public class Carpeta {
             System.out.println("Ya existe ese directorio");
         }
     }
-    public void muestraContenidoCarpeta(String nombreRuta){
-        File directorio = new File(nombreRuta);
+    public void muestraContenidoCarpeta(){
+        File directorio = new File(ruta);
         
         if(directorio.exists() && directorio.isDirectory()){
-          File[] listaFiles = directorio.listFiles(); //Me guardo en una lista todos los objetos files del directorio
-            if(listaFiles != null){
+            File[] listaFiles = directorio.listFiles(); //Me guardo en una lista todos los objetos files del directorio
+            if (listaFiles.length != 0){
                 for(File file : listaFiles){ //Recorro la lista
                     if(file.isDirectory()){
                         System.out.println("Directorio: " + file.getName());
@@ -95,13 +95,12 @@ public class Carpeta {
                         System.out.println("Archivo: " + file.getName() + " Tamaño: " + file.length() + " bytes");
                     }
                 }
-            }
-            else {
-                System.out.println("El directorio esta vacio");
+            }else{
+                System.out.println("El directorio esta vacio.");
             }
         }
         else{
-            System.out.println("Ruta invalida");
+            System.out.println("Ruta invalida o no es un directorio");
         }
         
     }
