@@ -29,6 +29,7 @@ public interface InterfazVista {
     static final String ELIMINARARCHIVO = "Elimina archivo de un directorio";
     static final String RENOMBRARARCHIVO = "Rrenombra un archivo";
     static final String COPIARARCHIVO = "Copia archivo en la ruta especificada";
+    static final String MOVERARCHIVO = "Mueve archivo en la ruta especificada";
     static final String MUESTRATODO = "Muestra contenido de directorio";
     static final String BORRATODO = "Borra contenido de directorio";
     

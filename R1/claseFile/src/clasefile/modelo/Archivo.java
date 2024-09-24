@@ -6,6 +6,8 @@
 package clasefile.modelo;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -106,7 +108,21 @@ public class Archivo{
         if(!archivoDestino.exists()){
             archivoDestino.createNewFile();
         }
-        Files.copy(archivo.toPath(), archivoDestino.toPath());
+        FileInputStream entrada = new FileInputStream(archivo);
+
+        // Crear un flujo de salida para el archivo de destino
+        FileOutputStream salida = new FileOutputStream(archivoDestino);
+
+        // Copiar el contenido del archivo de origen al archivo de destino
+        byte[] buffer = new byte[1024];
+        int leidos;
+        while ((leidos = entrada.read(buffer)) != -1) {
+            salida.write(buffer, 0, leidos);
+        }
+
+        // Cerrar los flujos
+        entrada.close();
+        salida.close();
     }
     /**
      * Mueve un archivo de una ruta a otra.
@@ -114,11 +130,12 @@ public class Archivo{
      * @param rutaOrigen La ruta del archivo a mover.
      * @param rutaDestino La ruta de destino donde se moverá el archivo.
      */
-    public void moverArchivo(String rutaOrigen, String rutaDestino) {
+    public void moverArchivo(String rutaOrigen, String rutaDestino) throws IOException  {
         File origen = new File(rutaOrigen);
-        File destino = new File(rutaDestino);
-        destino.getParentFile().mkdirs();   
-        origen.renameTo(destino);
+        copiarArchivo(rutaOrigen, rutaDestino);
+   
+        // Eliminar el archivo de origen
+        origen.delete();
     }
         
 

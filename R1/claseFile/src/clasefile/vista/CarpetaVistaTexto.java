@@ -81,9 +81,9 @@ public class CarpetaVistaTexto implements InterfazVista{
         System.out.println("4: crear archivo"); 
         System.out.println("5: renombrar archivo indicando la ruta y el nombre del archivo nuevo");
         System.out.println("6: copia archivo indicando ruta nueva");
-        
-        System.out.println("7: mostrar contenido de un directorio");
-        System.out.println("8: eliminar directorios y archivos");
+        System.out.println("7: mueve archivo indicando ruta nueva");
+        System.out.println("8: mostrar contenido de un directorio");
+        System.out.println("9: eliminar directorios y archivos");
         System.out.println("0: Salir");
     }
 
@@ -105,8 +105,9 @@ public class CarpetaVistaTexto implements InterfazVista{
             case 4 -> controladorA.actionPerformed(new ActionEvent(this, operacion, CREARARCHIVO));  
             case 5 -> controladorA.actionPerformed(new ActionEvent(this, operacion, RENOMBRARARCHIVO));
             case 6 -> controladorA.actionPerformed(new ActionEvent(this, operacion, COPIARARCHIVO));
-            case 7 -> controlador.actionPerformed(new ActionEvent(this, operacion, MUESTRATODO));
-            case 8 -> controlador.actionPerformed(new ActionEvent(this, operacion, BORRATODO));
+            case 7 -> controladorA.actionPerformed(new ActionEvent(this, operacion, MOVERARCHIVO));
+            case 8 -> controlador.actionPerformed(new ActionEvent(this, operacion, MUESTRATODO));
+            case 9 -> controlador.actionPerformed(new ActionEvent(this, operacion, BORRATODO));
             default -> operacionIncorrecta();
         }
         procesaNuevaOperacion();

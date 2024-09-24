@@ -9,9 +9,11 @@ import clasefile.controlador.ControlArchivo;
 import clasefile.controlador.ControlCarpeta;
 import clasefile.modelo.Archivo;
 import clasefile.modelo.Carpeta;
-import clasefile.vista.CarpetaVistaTexto;
+//import clasefile.vista.CarpetaVistaTexto;
 import clasefile.vista.InterfazVista;
 
+import clasefile.vista.VistaGUI;
+//import clasefile.vista.VistaGrafica;
 /**
  * Clase de ejemplo para usa la clase File
  * @author LMSP by Lucas Manuel Serrano Perez
@@ -24,7 +26,7 @@ public class ClaseFile {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        InterfazVista vista = new CarpetaVistaTexto();
+        InterfazVista vista = new VistaGUI();
         Carpeta modelo = new Carpeta();
         Archivo modeloA = new Archivo();
         ControlCarpeta control = new ControlCarpeta(vista, modelo);

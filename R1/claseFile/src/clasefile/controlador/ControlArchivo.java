@@ -9,6 +9,8 @@ import clasefile.vista.InterfazVista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -53,6 +55,16 @@ public class ControlArchivo implements ActionListener{
                 }
                 
             }
+            case InterfazVista.MOVERARCHIVO ->{
+                String rutaNueva = vista.getRuta();
+            try {
+                modelo.moverArchivo(ruta, rutaNueva);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+                
+            }
+
           
         }
     }
