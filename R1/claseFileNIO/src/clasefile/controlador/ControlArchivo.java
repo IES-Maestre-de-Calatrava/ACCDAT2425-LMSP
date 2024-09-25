@@ -35,7 +35,7 @@ public class ControlArchivo implements ActionListener{
         switch(evento.getActionCommand()){
             case InterfazVista.CREARARCHIVO -> {
                 String nombre = vista.getNombre();
-                modelo.crearArchivo(nombre);
+                modelo.crearArchivo(ruta, nombre);
             }
             case InterfazVista.ELIMINARARCHIVO -> {  
                 modelo.borrarArchivo(ruta);

@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 //import java.nio.file.Files;
 
 /**
@@ -40,18 +43,21 @@ public class Archivo{
         }
     }*/
 
-    public void crearArchivo(String nombreArchivo){
-        File archivo = new File(ruta + "/" + nombreArchivo);
-        if (!archivo.exists()) {
-            try {
-                archivo.createNewFile();
-                System.out.println("Archivo creado correctamente.");
-            } catch (IOException ex) {
-                ex.printStackTrace();
+    public void crearArchivo(String ruta, String nombreArchivo){
+        try {
+            // Ruta del archivo a crear
+            Path archivo = Paths.get(ruta, nombreArchivo);
+
+            // Crear el archivo si no existe
+            if (!Files.exists(archivo)) {
+                Files.createFile(archivo);
+                System.out.println("Archivo creado: " + archivo.toString());
+            } else {
+                System.out.println("El archivo ya existe.");
             }
-             // + archivo.getAbsolutePath());
-        } else {
-            System.out.println("Error al crear el archivo, ya existe uno con ese nombre");
+            
+        } catch (IOException e) {
+            System.err.println("Error al crear el archivo: " + e.getMessage());
         }
     }
     public void borrarArchivo (String ruta){

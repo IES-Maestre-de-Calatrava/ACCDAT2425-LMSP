@@ -10,7 +10,6 @@ import clasefile.controlador.ControlCarpeta;
 import clasefile.modelo.Archivo;
 import clasefile.modelo.Carpeta;
 import clasefile.vista.CarpetaVistaTexto;
-import clasefile.vista.VistaGUI;
 import clasefile.vista.InterfazVista;
 
 import clasefile.vista.VistaGUI;

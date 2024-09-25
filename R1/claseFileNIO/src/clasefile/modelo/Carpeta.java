@@ -6,6 +6,13 @@
 package clasefile.modelo;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
  * Clase encargada d ela logica de la aplicacion
@@ -23,7 +30,7 @@ public class Carpeta {
         this.ruta = ruta;
     }
     /**
-     * COnstructor vacio
+     * Constructor vacio
      */
     public Carpeta(){
   
@@ -60,13 +67,20 @@ public class Carpeta {
      * @param nombreDirectorio Nombre del nuevo directorio
      */
     public void crearCarpeta(String nombreDirectorio){
-        File directorioNuevo = new File(ruta, nombreDirectorio);
-        if (!directorioNuevo.exists()){
-            directorioNuevo.mkdir();
+        Path p = Paths.get(nombreDirectorio);
+        if (Files.exists(p)){
+            //Este sout
+            //return ("El directorio ya existe");
         }else{
-            System.out.println("Ya existe ese directorio");
+            try{
+                Path donePath = Files.createDirectories(p);
+            }catch (IOException ex){
+               // Logger.getLogger(Carpeta.class.getName()).log(Level.SEVERE, null, ex);
+                //return "El directorio ha sido creado.";
+            }
+            
         }
-        
+         
     }
     /**
      * Crea un directorio en ruta indicada utilizando File y nombre
@@ -81,23 +95,37 @@ public class Carpeta {
             System.out.println("Ya existe ese directorio");
         }
     }
+    
+    public void crearCarpeta(Path directorioRaiz, String nombreDirectorio){
+        crearCarpeta(directorioRaiz.toString()+"\\"+nombreDirectorio);
+    }
+    
+    
+    
     public void muestraContenidoCarpeta(){
-        File directorio = new File(ruta);
+        Path directorio = Paths.get(ruta);
         
-        if(directorio.exists() && directorio.isDirectory()){
-            File[] listaFiles = directorio.listFiles(); //Me guardo en una lista todos los objetos files del directorio
-            if (listaFiles.length != 0){
-                for(File file : listaFiles){ //Recorro la lista
-                    if(file.isDirectory()){
-                        System.out.println("Directorio: " + file.getName());
+        if(Files.exists(directorio) && Files.isDirectory(directorio)){
+            try {
+                Stream<Path> archivos = Files.list(directorio);
+                Files[] aArchivos = archivos.toArray(Files[]::new);
+                if (aArchivos.length != 0){
+                for(Files file : aArchivos){ //Recorro la lista
+                    /*if(file.isDirectory(directorio)){
+                        System.out.println("Directorio: " + file.getName(directorio));
                     }
                     else if(file.isFile()){
                         System.out.println("Archivo: " + file.getName() + " Tamaño: " + file.length() + " bytes");
-                    }
+                    }^*/
                 }
             }else{
                 System.out.println("El directorio esta vacio.");
             }
+            } catch (IOException ex) {
+                Logger.getLogger(Carpeta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
+            
         }
         else{
             System.out.println("Ruta invalida o no es un directorio");
