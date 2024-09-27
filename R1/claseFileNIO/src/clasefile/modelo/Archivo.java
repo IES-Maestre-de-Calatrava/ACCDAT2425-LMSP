@@ -9,10 +9,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-//import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -60,7 +63,7 @@ public class Archivo{
             System.err.println("Error al crear el archivo: " + e.getMessage());
         }
     }
-    public void borrarArchivo (String ruta){
+    /*public void borrarArchivo (String ruta){
         File archivo = new File(ruta);
         if ( archivo.exists()){
             if(archivo.isDirectory()){
@@ -75,22 +78,71 @@ public class Archivo{
             archivo.delete();
      
         }
-    }
-    public void renombrarArchivo(String ruta, String nombreNuevo){
-        File archivo = new File(ruta);
-        File archivoNuevo = new File(archivo.getParent(),nombreNuevo);
-        if(archivo.isFile()){
-            boolean exito = archivo.renameTo(archivoNuevo);
-            if(exito){
-                System.out.println("El archivo se ha renombrado con exito");
+    }*/
+    /*public void borrarArchivo(String ruta){
+        try {
+            // Ruta del archivo a crear
+            Path archivo = Paths.get(ruta);
+
+            // Crear el archivo si no existe
+            if (!Files.exists(archivo)) {
+                System.out.println("El archivo o directorio no existe.");
+            } else {
+                if(Files.isDirectory(archivo)){
+                    Files.list(archivo).forEach((Path element) -> {
+                        if(!Files.isDirectory(element)){
+                            try {
+                                Files.delete(element);
+                            } catch (IOException ex) {
+                                Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
+                }else{
+                    Files.delete(archivo);
+                }
             }
-            else{
-                System.out.println("No se ha podido renombrar el archivo");
-            }
-        }else{
-            System.out.println("El archivo especificado no existe");
+            
+        } catch (IOException e) {
+            System.err.println("Error al borrar el archivo: " + e.getMessage());
         }
     }
+    */
+    public void borrarArchivo(String ruta, String nombre){
+        Path p = Paths.get(ruta, nombre);
+        
+        if(Files.exists(p)){
+            try {
+                Files.list(p).forEach(element -> {
+                    if(!Files.isDirectory(element)){
+                        try{
+                            Files.delete(element);
+                            
+                        }catch(IOException ex){
+                            ex.getMessage();
+                        }
+                        
+                    }
+                });
+                Files.delete(p);
+            } catch (DirectoryNotEmptyException dnee) {
+                System.out.println("No esta vacia");
+            } catch (IOException ex){
+                Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }
+    
+    public void renombrarArchivo(String ruta, String nombreNuevo){
+        Path origen = Paths.get(ruta);
+        Path destino = origen.resolveSibling(nombreNuevo);
+        try{
+            Files.move(origen, destino);
+        }catch(IOException ex){
+            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }    
     /**
      * Copia un archivo de una ruta a otra.
      *
@@ -99,45 +151,30 @@ public class Archivo{
      * @throws IOException Si ocurre un error durante la copia del archivo.
      */
     public void copiarArchivo(String ruta, String rutaDestino) throws IOException{
-        File archivo = new File(ruta);
-        File archivoDestino = new File(rutaDestino);
-        
-        if(!archivo.exists()){
-            throw new IOException("El archivo no existe");
+        Path origen = Paths.get(ruta);
+        Path destino = Paths.get(rutaDestino);
+        try{
+            Files.copy(origen, destino);
+        }catch(IOException ex){
+            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE,null,ex);
         }
-        
-        if(!archivoDestino.exists()){
-            archivoDestino.createNewFile();
-        }
-        // Crear un flujo de entrada para el archivo de origen
-        FileInputStream entrada = new FileInputStream(archivo);
-
-        // Crear un flujo de salida para el archivo de destino
-        FileOutputStream salida = new FileOutputStream(archivoDestino);
-
-        // Copiar el contenido del archivo de origen al archivo de destino
-        byte[] buffer = new byte[1024];
-        int leidos;
-        while ((leidos = entrada.read(buffer)) != -1) {
-            salida.write(buffer, 0, leidos);
-        }
-
-        // Cerrar los flujos
-        entrada.close();
-        salida.close();
+   
     }
     /**
      * Mueve un archivo de una ruta a otra.
      *
      * @param rutaOrigen La ruta del archivo a mover.
      * @param rutaDestino La ruta de destino donde se moverá el archivo.
+     * @throws java.io.IOException
      */
     public void moverArchivo(String rutaOrigen, String rutaDestino) throws IOException  {
-        File origen = new File(rutaOrigen);
-        copiarArchivo(rutaOrigen, rutaDestino);
-   
-        // Eliminar el archivo de origen
-        origen.delete();
+        Path origen = Paths.get(ruta);
+        Path destino = Paths.get(rutaDestino);
+        try{
+            Files.move(origen, destino);
+        }catch(IOException ex){
+            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE,null,ex);
+        }
     }
         
 

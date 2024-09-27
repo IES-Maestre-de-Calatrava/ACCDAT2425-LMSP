@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 /**
  * Clase encargada d ela logica de la aplicacion
@@ -56,8 +55,11 @@ public class Carpeta {
      * Utiliza el atributo d ela clase
      */
     public void crearCarpeta(){
-       File directorioNuevo = new File(ruta);
-       directorioNuevo.mkdir();
+        try {
+            Files.createDirectories(Paths.get(ruta));
+        } catch (IOException ex) {
+            Logger.getLogger(Carpeta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     /**
      * Crea un directorio en la ruta indicada
@@ -87,7 +89,7 @@ public class Carpeta {
      * @param directorioRaiz File con ruta
      * @param nombreDirectorio Nombre del nuevo directorio
      */
-    public void crearCarpeta(File directorioRaiz, String nombreDirectorio){
+    public void crearCarpeta(String directorioRaiz, String nombreDirectorio){
         File directorioNuevo = new File(directorioRaiz, nombreDirectorio);
         if (!directorioNuevo.exists()){
             directorioNuevo.mkdir();
@@ -102,56 +104,41 @@ public class Carpeta {
     
     
     
-    public void muestraContenidoCarpeta(){
-        Path directorio = Paths.get(ruta);
+    public void muestraContenidoCarpeta(String ruta){
+    
+        Path dir = Paths.get(ruta);
         
-        if(Files.exists(directorio) && Files.isDirectory(directorio)){
-            try {
-                Stream<Path> archivos = Files.list(directorio);
-                Files[] aArchivos = archivos.toArray(Files[]::new);
-                if (aArchivos.length != 0){
-                for(Files file : aArchivos){ //Recorro la lista
-                    /*if(file.isDirectory(directorio)){
-                        System.out.println("Directorio: " + file.getName(directorio));
-                    }
-                    else if(file.isFile()){
-                        System.out.println("Archivo: " + file.getName() + " Tamaño: " + file.length() + " bytes");
-                    }^*/
-                }
-            }else{
-                System.out.println("El directorio esta vacio.");
-            }
-            } catch (IOException ex) {
-                Logger.getLogger(Carpeta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-           
-            
-        }
-        else{
-            System.out.println("Ruta invalida o no es un directorio");
-        }
-        
+        try {
+            Files.list(dir).forEach(path -> {
+                System.out.println(path.getFileName()+ " --- " + path.getFileSystem());
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+        }   
     }
+    
     public void eliminarContenidoCarpeta(String rutaDirectorio) {
-        File directorio = new File(rutaDirectorio);
-
+        Path directorio = Paths.get(rutaDirectorio);
         
-        if (!directorio.exists() || !directorio.isDirectory()) {
-            System.out.println("El directorio especificado no existe o no es un directorio.");
+        if (Files.isDirectory(directorio)) {
+            try{
+                Files.list(directorio).forEach(archivo ->{
+                    if (Files.isDirectory(archivo)) {
+                        eliminarContenidoCarpeta(archivo.toString()); //Lo llamo recursivamente por si hay subdirectorios
+                    }else{
+                        try { 
+                            Files.deleteIfExists(archivo);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Carpeta.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+                Files.deleteIfExists(directorio);
+            }catch(IOException ex){
+                Logger.getLogger(Carpeta.class.getName()).log(Level.SEVERE, null, ex);
+            } 
         }else{
-
-            File[] archivos = directorio.listFiles();
-            if (archivos != null) {
-                for (File archivo : archivos) {
-                    if (archivo.isDirectory()) {
-                        eliminarContenidoCarpeta(archivo.getAbsolutePath()); //Lo llamo recursivamente por si hay subdirectorios
-                    }
-                    if (!archivo.delete()) { //Si devuelve false es que no se ha podido eliminar
-                        System.out.println("No se pudo eliminar: " + archivo.getAbsolutePath());
-                    }
-                }
-            }
-            directorio.delete();
+            System.out.println("No es un directorio o no existe");
         }
     }
     

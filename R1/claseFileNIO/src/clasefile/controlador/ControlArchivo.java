@@ -38,7 +38,8 @@ public class ControlArchivo implements ActionListener{
                 modelo.crearArchivo(ruta, nombre);
             }
             case InterfazVista.ELIMINARARCHIVO -> {  
-                modelo.borrarArchivo(ruta);
+                String nombre = vista.getNombre();
+                modelo.borrarArchivo(ruta, nombre);
             }
             
             case InterfazVista.RENOMBRARARCHIVO -> {
@@ -48,20 +49,22 @@ public class ControlArchivo implements ActionListener{
             
             case InterfazVista.COPIARARCHIVO -> {
                 String rutaNueva = vista.getRuta();
-                try {
-                    modelo.copiarArchivo(ruta, rutaNueva);
-                } catch (IOException e){
-                    e.getMessage();
-                }
+            try {
+                modelo.copiarArchivo(ruta, rutaNueva);
+            } catch (IOException ex) {
+                Logger.getLogger(ControlArchivo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
                 
             }
             case InterfazVista.MOVERARCHIVO ->{
                 String rutaNueva = vista.getRuta();
-                try {
-                    modelo.moverArchivo(ruta, rutaNueva);
-                } catch (IOException ex) {
-                    ex.getMessage();
-                }
+            try {
+                modelo.moverArchivo(ruta, rutaNueva);
+            } catch (IOException ex) {
+                Logger.getLogger(ControlArchivo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+               
             }
 
           

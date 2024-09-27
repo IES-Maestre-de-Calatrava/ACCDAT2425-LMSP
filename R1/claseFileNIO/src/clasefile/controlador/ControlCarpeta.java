@@ -40,14 +40,14 @@ public class ControlCarpeta implements ActionListener {
             }
             case InterfazVista.CREARCARPETACONRUTAPADREYNOMBRE ->{
                 String nombre = vista.getNombre();
-                modelo.crearCarpeta(nombre);
+                modelo.crearCarpeta(ruta, nombre);
             }
             case InterfazVista.CREARCARPETACONFILEPADREYNOMBRE ->{
                 String nombre = vista.getNombre();
-                modelo.crearCarpeta(modelo.getFileDeRuta(), nombre);
+               // modelo.crearCarpeta(modelo.getFileDeRuta(), nombre);
             }
             case InterfazVista.MUESTRATODO ->{
-                modelo.muestraContenidoCarpeta();
+                modelo.muestraContenidoCarpeta(ruta);
             }
             case InterfazVista.BORRATODO ->{
                 modelo.eliminarContenidoCarpeta(ruta);
