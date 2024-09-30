@@ -12,7 +12,7 @@ import clasefile.modelo.Carpeta;
 import clasefile.vista.CarpetaVistaTexto;
 import clasefile.vista.InterfazVista;
 
-import clasefile.vista.VistaGUI;
+//import clasefile.vista.VistaGUI;
 //import clasefile.vista.VistaGrafica;
 /**
  * Clase de ejemplo para usa la clase File
