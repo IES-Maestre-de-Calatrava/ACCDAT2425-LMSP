@@ -40,8 +40,11 @@ public class FileStreams {
     public void setPath(String path) {
         this.path = path;
     }
+    public void setFile(){
+        this.archivo = new File(path);
+    }
     
-    public String leerStreamCaracteres(){
+    public void leerStreamCaracteres(){
         //path = "texto";
         StringBuffer sbOut = new StringBuffer(50);
         int i=0;
@@ -61,7 +64,7 @@ public class FileStreams {
             Logger.getLogger(FileStreams.class.getName()).log(Level.SEVERE, null, ex);
         }
         String salida = sbOut.toString();
-        return salida;
+        System.out.println(salida);
     }
     public void leerStreamArrayCaracteres(){
         int i=0;

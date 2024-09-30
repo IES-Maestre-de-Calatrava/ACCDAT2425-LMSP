@@ -4,7 +4,10 @@
 
 package com.lmsp.maestre.filestreamscaracteres;
 
+import com.lmsp.maestre.filestreamscaracteres.controlador.Controlador;
 import com.lmsp.maestre.filestreamscaracteres.modelo.FileStreams;
+import com.lmsp.maestre.filestreamscaracteres.vista.InterfazVista;
+import com.lmsp.maestre.filestreamscaracteres.vista.VistaTexto;
 
 /**
  *
@@ -13,9 +16,13 @@ import com.lmsp.maestre.filestreamscaracteres.modelo.FileStreams;
 public class Filestreamscaracteres {
 
     public static void main(String[] args) {
-        FileStreams modelo = new FileStreams("texto");
-        //modelo.leerStreamBufferedReader();
+        
+        FileStreams modelo = new FileStreams();
+        InterfazVista vista = new VistaTexto();
+        Controlador controlador = new Controlador(vista, modelo);
+        vista.arranca();
+        /*//modelo.leerStreamBufferedReader();
         char[] array= {'H','O','L','A'};
-        modelo.escribirStreamArrayCaracteres(array, true);
+        modelo.escribirStreamArrayCaracteres(array, false);*/
     }
 }
