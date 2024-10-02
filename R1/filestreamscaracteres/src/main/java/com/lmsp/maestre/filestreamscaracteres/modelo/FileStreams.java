@@ -6,11 +6,16 @@
 package com.lmsp.maestre.filestreamscaracteres.modelo;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +35,6 @@ public class FileStreams {
         archivo = new File(path);
     }
 
-    public FileStreams() {
-    }
 
     public String getPath() {
         return path;
@@ -42,6 +45,28 @@ public class FileStreams {
     }
     public void setFile(){
         this.archivo = new File(path);
+    }
+    public void creaFichero(){
+        Path p = Paths.get(path);
+        if(!Files.exists(p)){
+            try {
+                Files.createFile(p);
+            } catch (IOException ex) {
+                Logger.getLogger(FileStreams.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    public boolean existeFichero(){
+        boolean existe = false;
+        Path p = Paths.get(path);
+        if(Files.exists(p)){
+            existe = true;
+        }
+        return existe;
+    }
+    public void noExiste(){
+        String noExiste = "El fichero introducido no existe, solo puedes seleccionar opciones de escritura para crearlo";
+        System.out.println(noExiste);
     }
     
     public void leerStreamCaracteres(){
@@ -78,6 +103,7 @@ public class FileStreams {
                 i = archivoInTexto.read(cadena); 
                 
             }
+            System.out.println(" ");
             archivoInTexto.close();
             
         } catch (FileNotFoundException ex) {
@@ -130,5 +156,42 @@ public class FileStreams {
             Logger.getLogger(FileStreams.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    public void escribirStreamBufferedCaracteres(String cadena, boolean sobreescribe){
+        FileWriter ficheroOut = null;
+        try {
+            ficheroOut = new FileWriter(path, sobreescribe);
+            BufferedWriter bufferedficheroOut = new BufferedWriter(ficheroOut);
+            bufferedficheroOut.write(cadena);
+            bufferedficheroOut.flush();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(FileStreams.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ficheroOut.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FileStreams.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    public void escribirBufferedPrintCaracteres(String cadena, boolean sobreescribe){
+        FileWriter ficheroOut = null;
+        try {
+            ficheroOut = new FileWriter(path, sobreescribe);
+            //BufferedWriter bufferedficheroOut = new BufferedWriter(ficheroOut);
+            PrintWriter printFicheroOut = new PrintWriter(ficheroOut);
+            printFicheroOut.print(cadena);
+            printFicheroOut.flush();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(FileStreams.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ficheroOut.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FileStreams.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

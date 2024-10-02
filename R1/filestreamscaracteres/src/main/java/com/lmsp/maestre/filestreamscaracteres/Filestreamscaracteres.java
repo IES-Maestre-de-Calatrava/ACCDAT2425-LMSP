@@ -17,9 +17,11 @@ public class Filestreamscaracteres {
 
     public static void main(String[] args) {
         
-        FileStreams modelo = new FileStreams();
+        
         InterfazVista vista = new VistaTexto();
+        FileStreams modelo = new FileStreams(vista.getPath());
         Controlador controlador = new Controlador(vista, modelo);
+        //modelo.escribirStreamBufferedCaracteres("Vuelta a la rutina", true);
         vista.arranca();
         /*//modelo.leerStreamBufferedReader();
         char[] array= {'H','O','L','A'};
