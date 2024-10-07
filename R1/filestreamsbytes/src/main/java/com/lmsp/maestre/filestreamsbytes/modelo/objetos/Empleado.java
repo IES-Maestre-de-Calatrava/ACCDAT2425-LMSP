@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package com.break4learning.filestreamsbytes.modelo.objetos;
+package com.lmsp.maestre.filestreamsbytes.modelo.objetos;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -128,7 +128,7 @@ public class Empleado implements Serializable, Comparable<Empleado>{
     }
     @Override
     public String toString (){
-        String mensaje="El empleado se llama "+nombre+" "+apellido+" con "+edad+" años " +
+        String mensaje="El empleado se llama "+nombre+" "+apellido+" con "+edad+" anios " +
                 "y un salario de "+salario;
         return mensaje;
     }
