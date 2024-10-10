@@ -13,7 +13,7 @@ import java.io.File;
  * @version 1.0
  * Created on 7 oct 2024
  */
-public class FicheroEmpleado {
+public class FicheroEmpleado{
     private final int LONGITUD_LONG = 8;
     private final int LONGITUD_DOUBLE = 8;
     private final int LONGITUD_INT = 4;
@@ -36,22 +36,6 @@ public class FicheroEmpleado {
     
     public FicheroEmpleado(String ruta){
         this.ruta = new File(ruta);
-    }
-
-    public int getLONGITUD_LONG() {
-        return LONGITUD_LONG;
-    }
-
-    public int getLONGITUD_DOUBLE() {
-        return LONGITUD_DOUBLE;
-    }
-
-    public int getLONGITUD_INT() {
-        return LONGITUD_INT;
-    }
-
-    public int getLONGITUD_CHAR() {
-        return LONGITUD_CHAR;
     }
 
     public int getCARACTERES_APELLIDO() {

@@ -67,5 +67,9 @@ public class Empleado {
         this.salario = salario;
     }
     
+    @Override
+    public String toString(){
+        return ("Identificador: "+this.getIdentificador()+", Apellido: "+this.getApellido()+", Departamento: "+this.getDepartamento()+", Salario: "+this.getSalario());
+    }
 
 }

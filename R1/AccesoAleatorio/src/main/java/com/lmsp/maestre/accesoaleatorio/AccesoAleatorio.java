@@ -4,6 +4,11 @@
 
 package com.lmsp.maestre.accesoaleatorio;
 
+import com.lmsp.maestre.accesoaleatorio.model.Empleado;
+import com.lmsp.maestre.accesoaleatorio.model.Escritura;
+import com.lmsp.maestre.accesoaleatorio.model.Lectura;
+import java.util.ArrayList;
+
 /**
  *
  * @author LMSP by Lucas Manuel Serrano Perez
@@ -11,6 +16,21 @@ package com.lmsp.maestre.accesoaleatorio;
 public class AccesoAleatorio {
 
     public static void main(String[] args) {
+        Escritura modeloE = new Escritura("archivo_empleado.dat");
+        Empleado empleado = new Empleado(2,"Rodriguez",52,20070);
+        modeloE.escribirEmpleadoSegunId(empleado);
+        modeloE.cambiaApellido(5,"Serrano");
         
+       /* empleado = new Empleado("Garcia",2,2500);
+        modeloE.escribirEmpleadoFinalArchivo(empleado);
+        
+        empleado = new Empleado("Robledo",2,5000);
+        modeloE.escribirEmpleadoFinalArchivo(empleado);*/
+        
+        Lectura modeloL = new Lectura("archivo_empleado.dat");
+        ArrayList<Empleado> empleados = modeloL.muestraRegistros();
+        for (Empleado e: empleados){
+            System.out.println(e.toString());
+        }
     }
 }
