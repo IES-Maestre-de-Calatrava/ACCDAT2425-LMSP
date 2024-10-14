@@ -69,16 +69,14 @@ public class Escritura extends FicheroEmpleado {
         
         try {
             randomFile = new RandomAccessFile(getRuta(),"rw");
-            if (randomFile.length()!=0){
-                posicion = (empleado.getIdentificador() - 1)*super.getLONGITUD_TOTAL();
-            }
+            
+            posicion = (empleado.getIdentificador() - 1)*super.getLONGITUD_TOTAL();
+           
         
             randomFile.seek(posicion);
             
             //Escribimos la posicion
-            //posicion = 120--> 40 + 40 + 40
-            //tamaño de registro = 40
-            randomFile.writeLong( posicion/super.getLONGITUD_TOTAL() +1);
+            randomFile.writeLong( empleado.getIdentificador());
             //Escribimos apellido
             bufferStr = new StringBuffer(empleado.getApellido());
             bufferStr.setLength(super.getCARACTERES_APELLIDO());
@@ -134,18 +132,17 @@ public class Escritura extends FicheroEmpleado {
         long posicion = 0;
         try {
             randomFile = new RandomAccessFile(getRuta(),"rw");
-            if (randomFile.length()!=0){
-                posicion = ((identificador - 1)*super.getLONGITUD_TOTAL())+super.getLONGITUD_IDENTIFICADOR();
+            if (randomFile.length()>((identificador - 1)*super.getLONGITUD_TOTAL())){
+                posicion = ((identificador - 1)*super.getLONGITUD_TOTAL());
+                randomFile.seek(posicion);
+                if (identificador == randomFile.readLong()){
+                    //reescribimos apellido
+                    StringBuffer bufferStr = new StringBuffer(apellido);
+                    bufferStr.setLength(super.getCARACTERES_APELLIDO());
+                    randomFile.writeChars(bufferStr.toString());
+                }
             }
-        
-            randomFile.seek(posicion);
-            //reescribimos apellido
-            StringBuffer bufferStr = new StringBuffer(apellido);
-            bufferStr.setLength(super.getCARACTERES_APELLIDO());
-            randomFile.writeChars(bufferStr.toString());
-            
-            
-            
+           
         } catch (FileNotFoundException fnfe){
             Logger.getLogger(Escritura.class.getName()).log(Level.SEVERE, null, fnfe);
         } catch (IOException ex) {
