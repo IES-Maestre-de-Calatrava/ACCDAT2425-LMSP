@@ -2,14 +2,14 @@
 <Empleados>
     <Empleado>
         <identificador>1</identificador>
-        <Cargo>Por especificar</Cargo>
+        <departamento>2</departamento>
     </Empleado>
     <Empleado>
         <identificador>2</identificador>
-        <Cargo>Por especificar</Cargo>
+        <departamento>2</departamento>
     </Empleado>
     <Empleado>
         <identificador>3</identificador>
-        <Cargo>Por especificar</Cargo>
+        <departamento>2</departamento>
     </Empleado>
 </Empleados>

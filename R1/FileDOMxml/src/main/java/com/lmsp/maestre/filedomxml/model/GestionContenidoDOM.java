@@ -42,6 +42,7 @@ public class GestionContenidoDOM {
     DocumentBuilderFactory factory;
     DocumentBuilder builder;
     
+    
     public GestionContenidoDOM(String nombre){
         try {
             factory = DocumentBuilderFactory.newInstance();
@@ -70,14 +71,23 @@ public class GestionContenidoDOM {
         dato.appendChild(textoDato);
         raiz.appendChild(dato);
     }
-    private Transformer preProcess(){
+     public void addNodoYTextoANodos(String datoEmple, String texto, String elemName){ 
+        NodeList nodeL = this.documento.getElementsByTagName(elemName);
+        for (int i= 0;i < nodeL.getLength(); i++){
+            Element dato = this.documento.createElement(datoEmple);
+            Text textoDato = this.documento.createTextNode(texto);
+            dato.appendChild(textoDato);
+            nodeL.item(i).appendChild(dato);
+        }
+    }
+    private Transformer preProcess(String indent){
         Transformer transformer = null;
         try {
             transformer = TransformerFactory.newInstance().newTransformer();
         } catch (TransformerConfigurationException ex) {
             Logger.getLogger(GestionContenidoDOM.class.getName()).log(Level.SEVERE, null, ex);
         }
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.INDENT, indent);
         //transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "1");
         return transformer;
     }
@@ -86,7 +96,7 @@ public class GestionContenidoDOM {
             Source source = new DOMSource(this.documento);
             Result salida = new StreamResult(System.out);
             
-            preProcess().transform(source, salida);
+            preProcess("no").transform(source, salida);
         }   catch (TransformerException ex) {
             Logger.getLogger(GestionContenidoDOM.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,7 +106,7 @@ public class GestionContenidoDOM {
             Source source = new DOMSource(this.documento);
             Result salida = new StreamResult(new File(nombreArchivo));
             
-            preProcess().transform(source, salida);
+            preProcess("yes").transform(source, salida);
         }   catch (TransformerException ex) {
             Logger.getLogger(GestionContenidoDOM.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -137,4 +147,5 @@ public class GestionContenidoDOM {
         }
         return empleList;
     }
+   
 }
