@@ -147,5 +147,21 @@ public class GestionContenidoDOM {
         }
         return empleList;
     }
+    public void removeElement(String elementName){
+        
+    }
+    public void setSalarioEmple(long identificador, int nSalario){
+        boolean encontrado = false;
+        int count = 0;
+        NodeList nodeList = this.documento.getElementsByTagName("Empleado");
+        while (!encontrado && count < nodeList.getLength()){
+            Element elem = (Element) nodeList.item(count);
+            String idStr= getTagValue("identificador", elem);
+            if (identificador == Long.parseLong(idStr)){
+                
+            }
+        }
+    }
+   
    
 }
