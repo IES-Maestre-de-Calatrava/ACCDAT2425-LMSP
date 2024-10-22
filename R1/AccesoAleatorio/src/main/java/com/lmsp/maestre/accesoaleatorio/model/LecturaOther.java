@@ -16,10 +16,13 @@ import java.util.logging.Logger;
  *
  * @author LMSP by Lucas Manuel Serrano Perez
  * @version 1.0
- * Created on 9 oct 2024
+ * Created on 14 oct 2024
  */
-public class Lectura extends FicheroEmpleado {
-    public Lectura(String ruta){
+
+
+//Es una alternativa
+public class LecturaOther extends FicheroEmpleado {
+    public LecturaOther(String ruta){
         super(ruta);
     }
     public Empleado lecturaEmpleado(int identificador){
@@ -72,19 +75,22 @@ public class Lectura extends FicheroEmpleado {
             while(posicion<randomFile.length()){
                     Empleado empleado = new Empleado();
                     randomFile.seek(posicion);
-                    
-                    //leemos identificador
-                    empleado.setIdentificador(randomFile.readLong());
-                    //leemos apellido
-                    randomFile.read(cadena);
-                    empleado.setApellido(new String(cadena));
-                    //leeemos departamento
-                    empleado.setDepartamento(randomFile.readInt());
-                    //leemos salario
-                    empleado.setSalario(randomFile.readDouble());
-                    posicion = posicion + super.getLONGITUD_TOTAL();
-                    if (empleado.getIdentificador()!=0){
+                    long id = randomFile.readLong();
+                    if (id!=0){
+                        //leemos identificador
+                        empleado.setIdentificador(id);
+                        //leemos apellido
+                        randomFile.read(cadena);
+                        empleado.setApellido(new String(cadena));
+                        //leeemos departamento
+                        empleado.setDepartamento(randomFile.readInt());
+                        //leemos salario
+                        empleado.setSalario(randomFile.readDouble());
+                        posicion = posicion + super.getLONGITUD_TOTAL();
+
                         empleados.add(empleado);
+                    }else{
+                        posicion += super.getLONGITUD_TOTAL()-super.getLONGITUD_IDENTIFICADOR();
                     }
             }
              
