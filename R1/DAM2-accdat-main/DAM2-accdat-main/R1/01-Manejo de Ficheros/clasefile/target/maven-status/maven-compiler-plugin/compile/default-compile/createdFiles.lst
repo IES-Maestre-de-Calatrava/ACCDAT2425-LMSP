@@ -1,0 +1,5 @@
+com\break4learning\clasefile\ClaseFile.class
+com\break4learning\clasefile\modelo\Carpeta.class
+com\break4learning\clasefile\vista\CarpetaVistaTexto.class
+com\break4learning\clasefile\controlador\ControlCarpeta.class
+com\break4learning\clasefile\vista\InterfazVista.class
