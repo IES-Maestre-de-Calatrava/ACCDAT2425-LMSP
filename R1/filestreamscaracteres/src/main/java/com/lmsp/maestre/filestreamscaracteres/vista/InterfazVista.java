@@ -19,7 +19,7 @@ public interface InterfazVista {
     public char getChar();
     public char[] getArrayChar();
     
-    static final String LEESTRINGBUFFER = "Lee usando StringBuffer de 50";
+    static final String CREAESTRUCTURACARPETAS = "Lee usando StringBuffer de 50";
     static final String LEEARRAY = "Lee usando un array de 5";
     static final String LEEBUFFEREDREADER = "Lee usando BufferedReader";
     static final String ESCRIBEOSOBREESCRIBE = "Escribe o sobreescribe";

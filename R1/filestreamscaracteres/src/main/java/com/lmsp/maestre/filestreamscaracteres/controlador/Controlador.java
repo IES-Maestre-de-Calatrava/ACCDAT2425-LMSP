@@ -8,12 +8,6 @@ import com.lmsp.maestre.filestreamscaracteres.modelo.FileStreams;
 import com.lmsp.maestre.filestreamscaracteres.vista.InterfazVista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -41,7 +35,7 @@ public class Controlador implements ActionListener{
         boolean existe = modelo.existeFichero();
         
         switch(e.getActionCommand()){
-            case InterfazVista.LEESTRINGBUFFER -> {
+            case InterfazVista.CREAESTRUCTURACARPETAS -> {
                 if(existe){
                     modelo.leerStreamCaracteres();
                 }else{

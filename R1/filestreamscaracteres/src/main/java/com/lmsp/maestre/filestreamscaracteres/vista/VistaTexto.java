@@ -116,7 +116,7 @@ public class VistaTexto implements InterfazVista {
                 System.out.println("Adios.");
                 System.exit(0);
             }
-            case 1 -> controlador.actionPerformed(new ActionEvent(this, opcion, LEESTRINGBUFFER));
+            case 1 -> controlador.actionPerformed(new ActionEvent(this, opcion, CREAESTRUCTURACARPETAS));
             case 2 -> controlador.actionPerformed(new ActionEvent(this, opcion, LEEARRAY));
             case 3 -> controlador.actionPerformed(new ActionEvent(this, opcion, LEEBUFFEREDREADER));
             case 4 -> controlador.actionPerformed(new ActionEvent(this, opcion, ESCRIBEOSOBREESCRIBE));
