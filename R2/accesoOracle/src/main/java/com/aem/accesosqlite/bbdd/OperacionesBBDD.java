@@ -5,12 +5,14 @@
 
 package com.aem.accesosqlite.bbdd;
 
+import com.aem.accesosqlite.modelo.ConexionOracle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,17 +23,46 @@ import java.util.logging.Logger;
  * Created on 4 nov 2024
  */
 public class OperacionesBBDD {
-    private final String driver;
-    private final String urlconnection;
+    private final String driver;                // Driver
+    private final String urlconnection;   // Cadena de conexión
     
     private static OperacionesBBDD operacionesBBDD = null;
-    
-    private Connection conexion;
+
+    private Connection conexion = null;
+    private Properties propiedades = null;
     private PreparedStatement preparedStatement;
     
+    /**
+     * Establece la conexión a la BBDD Oracle
+     */
+    public void conectarOracle(){
+        try {
+            this.propiedades = new Properties();
+            this.propiedades.setProperty("user", "dam2");
+            this.propiedades.setProperty("password", "dam2");
+            Class.forName(driver);
+            this.conexion = DriverManager.getConnection(urlconnection, propiedades);
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ConexionOracle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     /**
+     * Cierra la conexión a la BBDD Oracle
+     */
+    public void cierraConexion(){
+        try {
+            this.conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionOracle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     private OperacionesBBDD(){
-        driver = "org.sqlite.JDBC";
-        urlconnection= "jdbc:sqlite:./bbdd/ejemplo.db";
+        driver = "oracle.jdbc.driver.OracleDriver";
+        urlconnection= "jdbc:oracle:thin:./bbdd/TablasEmpleORACLE_FK.sql";
     }
     public static OperacionesBBDD getInstance(){
         if (operacionesBBDD == null){

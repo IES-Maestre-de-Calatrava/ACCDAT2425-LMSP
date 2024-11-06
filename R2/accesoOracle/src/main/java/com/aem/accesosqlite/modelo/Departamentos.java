@@ -5,7 +5,7 @@
 
 package com.aem.accesosqlite.modelo;
 
-import com.aem.accesosqlite.Accesosqlite;
+import com.aem.accesosqlite.AccesosOracle;
 import com.aem.accesosqlite.bbdd.OperacionesBBDD;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,7 +67,7 @@ public class Departamentos {
             OperacionesBBDD bbdd = OperacionesBBDD.getInstance();
             bbdd.insert("insert into Departamentos values (?,?,?)", getNumDep(), getNombreDep(), getPoblacionDep());
         } catch (SQLException ex) {
-            Logger.getLogger(Accesosqlite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccesosOracle.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public void selectById(OperacionesBBDD bbdd, int n){
