@@ -7,6 +7,11 @@ package com.aem.accesosqlite;
 import com.aem.accesosqlite.bbdd.OperacionesBBDD;
 import com.aem.accesosqlite.modelo.Departamentos;
 import com.aem.accesosqlite.modelo.Empleados;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -18,12 +23,20 @@ import com.aem.accesosqlite.modelo.Empleados;
 public class AccesosOracle {
     private static OperacionesBBDD bbdd = OperacionesBBDD.getInstance();
     private static Departamentos dep = new Departamentos(1, "Informática", "Ciudad Real");
-    private static Empleados emp = new Empleados(1, "Serrano", "Joyero", 14, "14/12/1998", 28900, 1225, 1);
     
     public static void main(String[] args) {
-      
+        SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date fecha = null;
+        try {
+            fecha = s.parse("26/04/2001");
+        } catch (ParseException ex) {
+            Logger.getLogger(AccesosOracle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Date fechaSQL = new Date(fecha.getTime());
         
-        bbdd.conectarOracle();       
+        bbdd.conectarOracle();  
+        Empleados emp = new Empleados(1, "Serrano", "Joyero", 14, fechaSQL , 200, 1225, 10);
+        emp.insert();
         bbdd.cierraConexion();
     }
     

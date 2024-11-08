@@ -62,7 +62,7 @@ public class OperacionesBBDD {
     
     private OperacionesBBDD(){
         driver = "oracle.jdbc.driver.OracleDriver";
-        urlconnection= "jdbc:oracle:thin:./bbdd/TablasEmpleORACLE_FK.sql";
+        urlconnection= "jdbc:oracle:thin:@localhost:1521/FREE";
     }
     public static OperacionesBBDD getInstance(){
         if (operacionesBBDD == null){
@@ -70,23 +70,7 @@ public class OperacionesBBDD {
         }
         return operacionesBBDD;
     }
-    public void abrirConexion(){
-        try {
-            Class.forName(driver);
-            this.conexion = DriverManager.getConnection(urlconnection);
-        } catch (SQLException ex) {
-            Logger.getLogger(OperacionesBBDD.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(OperacionesBBDD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public void cerrarConexion(){
-        try {
-            this.conexion.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(OperacionesBBDD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
     public Optional<ResultSet> insert(String insertSQL, Object... params) throws SQLException{
         preparedStatement = conexion.prepareStatement(insertSQL, PreparedStatement.RETURN_GENERATED_KEYS);
         //"insert into Departamentos values (?,?,?)", 1, "informatica", "Ciudad Real"
