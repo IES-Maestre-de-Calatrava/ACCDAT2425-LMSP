@@ -47,6 +47,9 @@ public class OperacionesBBDD {
             Logger.getLogger(ConexionOracle.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public Connection getConexion() {
+        return conexion;
+    }
     
      /**
      * Cierra la conexión a la BBDD Oracle
@@ -62,7 +65,7 @@ public class OperacionesBBDD {
     
     private OperacionesBBDD(){
         driver = "oracle.jdbc.driver.OracleDriver";
-        urlconnection= "jdbc:oracle:thin:@localhost:1521/FREE";
+        urlconnection= "jdbc:oracle:thin:@localhost:1521";
     }
     public static OperacionesBBDD getInstance(){
         if (operacionesBBDD == null){

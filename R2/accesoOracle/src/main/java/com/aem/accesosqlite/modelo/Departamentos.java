@@ -7,8 +7,10 @@ package com.aem.accesosqlite.modelo;
 
 import com.aem.accesosqlite.AccesosOracle;
 import com.aem.accesosqlite.bbdd.OperacionesBBDD;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -124,5 +126,50 @@ public class Departamentos {
         } catch (SQLException ex) {
             Logger.getLogger(Departamentos.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public static String pNombreDepart(OperacionesBBDD bbdd, int dept_no) {
+        CallableStatement llamada;
+        String dnombre = null;
+        try {     
+            //Vamos a llamar a un procedimiento con la siguiente cabecera
+            //PROCEDURE P_NOMBRE_DEPART(NDEPART NUMBER, NOMBRE_DEPART OUT VARCHAR2)
+            //Preparamos el string para la llamada:
+            String sql = "{call p_nombre_depart (?,?)}"; 
+            
+            //Creamos un objeto llamando al método prepareCall:
+            llamada=bbdd.getConexion().prepareCall(sql);
+            
+            //Indicamos cuáles son los parámetros de entrada y cuales los de salida
+            //Le damos valor al parámetro de entrada:
+            llamada.setInt(1, dept_no);
+            //Registramos el parámetro de salida de la función:
+            llamada.registerOutParameter(2, Types.VARCHAR);
+            
+            //Realizamos la llamada al procedimiento:
+            llamada.executeUpdate();
+            
+            //Obtenemos el valor del primer parámetro de salida
+            dnombre = llamada.getString(2);
+                     
+        } catch (SQLException ex) {
+            Logger.getLogger(Departamentos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return  dnombre;
+    }
+    public static String fNombreDepart(OperacionesBBDD bbdd, int dept_no) {
+        CallableStatement llamada;
+        String dnombre = null;
+        try {     
+            String sql = "{?=call f_nombre_depart (?)}";
+            llamada=bbdd.getConexion().prepareCall(sql);
+            llamada.setInt(2, dept_no);
+            llamada.registerOutParameter(1, Types.VARCHAR);
+            llamada.executeUpdate();
+            dnombre = llamada.getString(1);
+                     
+        } catch (SQLException ex) {
+            Logger.getLogger(Departamentos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return  dnombre;
     }
 }
