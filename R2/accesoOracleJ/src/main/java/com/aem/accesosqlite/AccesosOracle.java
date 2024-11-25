@@ -36,7 +36,7 @@ public class AccesosOracle {
        Date fechaSQL = new Date(fecha.getTime());
         
         bbdd.conectarOracle();  
-        Empleados emp = new Empleados(282, "Serrano", "Dev", 7902, fechaSQL , 200, 1225, 10);
+        Empleados emp = new Empleados(287, "Serrano", "Dev", 7902, fechaSQL , 1, 123, 60);
         emp.insert();
         //System.out.println(bbdd.obtenerNumeroFilasDevueltas(bbdd.select("SELECT d.* from departamentos d")));
         bbdd.cierraConexion();
