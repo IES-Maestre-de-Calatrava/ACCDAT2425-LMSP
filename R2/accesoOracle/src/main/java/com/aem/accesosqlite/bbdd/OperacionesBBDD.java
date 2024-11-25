@@ -84,7 +84,7 @@ public class OperacionesBBDD {
         return Optional.of(preparedStatement.getGeneratedKeys());
     }
     private ResultSet executeQuery(String querySQL, Object... params) throws SQLException{
-        preparedStatement = conexion.prepareStatement(querySQL);
+        preparedStatement = conexion.prepareStatement(querySQL, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
         
         for (int i = 0;i<params.length; i++){
             preparedStatement.setObject(i+1, params[i]);
@@ -106,5 +106,17 @@ public class OperacionesBBDD {
     }
     public int delete(String genericSQL, Object... params) throws SQLException{
         return updateQuery(genericSQL, params);
+    }
+    public int obtenerNumeroFilasDevueltas(Optional<ResultSet> rs){
+        int rows=0;
+        try {
+            if(rs.get().last()){
+                rows=rs.get().getRow();
+                rs.get().beforeFirst();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OperacionesBBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rows;
     }
 }

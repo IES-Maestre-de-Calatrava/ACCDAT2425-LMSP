@@ -7,6 +7,7 @@ package com.aem.accesosqlite.modelo;
 
 import com.aem.accesosqlite.AccesosOracle;
 import com.aem.accesosqlite.bbdd.OperacionesBBDD;
+import java.awt.BorderLayout;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -107,10 +108,43 @@ public class Empleados {
     
     public void insert(){
         try {
+           
             OperacionesBBDD bbdd = OperacionesBBDD.getInstance();
-            bbdd.insert("insert into Empleados values (?,?,?,?,?,?,?,?)", getEmpNo(), getApellido(), getOficio(), getDir(), getFechaAlta(), getSalario(), getComision(), getDepNo());
+            ResultSet rs =bbdd.select("SELECT emp_no FROM empleados WHERE emp_no = ? ", this.dir).get();
+            if(rs.next()){
+                if(getSalario()<=0){
+                    System.out.println("El salario debe ser mayor que 0");
+                }
+                else if(this.apellido == null || this.apellido.isEmpty()||this.oficio == null || this.oficio.isEmpty()){
+                    System.out.println("El apellido o el oficio no pueden ser nulos o vacios");
+                }
+                else{
+
+                    bbdd.insert("insert into Empleados values (?,?,?,?,?,?,?,?)", getEmpNo(), getApellido(), getOficio(), getDir(), getFechaAlta(), getSalario(), getComision(), getDepNo());
+                    System.out.println("El empleado se inserto correctamente");
+                }
+            }
+            else{
+                System.out.println("No existe el director");
+            }
+           
+                
         } catch (SQLException ex) {
-            Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
+            switch(ex.getErrorCode()){
+                case 1:{
+                    System.out.println("Ese numero de empleado ya existe");
+                    break;
+                }
+                case 2291:{
+                    System.out.println("Ese numero de departamento no existe");
+                    break;
+                }
+            }
+            System.out.println ("Ha ocurrido un error:");
+            System.out.println ("Mensaje: " +ex.getMessage());
+            System.out.println ("SQL Estado: " +ex.getSQLState());
+            System.out.println ("Código de error: " +ex.getErrorCode());
+            //Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public void selectByIdEmple(OperacionesBBDD bbdd, int n){

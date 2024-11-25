@@ -14,16 +14,16 @@ import java.io.File;
  * Created on 7 oct 2024
  */
 public class FicheroEmpleado{
-    private final int LONGITUD_LONG = 8;
-    private final int LONGITUD_DOUBLE = 8;
+    @SuppressWarnings("FieldNameHidesFieldInSuperclass")
     private final int LONGITUD_INT = 4;
+    private final int LONGITUD_DOUBLE = 8;
     private final int LONGITUD_CHAR = 2;
     
     
     private final int CARACTERES_APELLIDO = 10;
     
     
-    private final int LONGITUD_IDENTIFICADOR = LONGITUD_LONG;
+    private final int LONGITUD_IDENTIFICADOR = LONGITUD_INT;
     private final int LONGITUD_APELLIDO = CARACTERES_APELLIDO * LONGITUD_CHAR;
     private final int LONGITUD_DEPARTAMENTO = LONGITUD_INT;
     private final int LONGITUD_SALARIO = LONGITUD_DOUBLE;
