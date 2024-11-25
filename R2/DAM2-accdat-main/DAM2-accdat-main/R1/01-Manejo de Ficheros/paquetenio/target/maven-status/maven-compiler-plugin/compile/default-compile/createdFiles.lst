@@ -1,0 +1,5 @@
+com\break4learning\paquetenio\modelo\Carpeta.class
+com\break4learning\paquetenio\controlador\ControlCarpeta.class
+com\break4learning\paquetenio\PaqueteNio.class
+com\break4learning\paquetenio\vista\CarpetaVistaTexto.class
+com\break4learning\paquetenio\vista\InterfazVista.class
