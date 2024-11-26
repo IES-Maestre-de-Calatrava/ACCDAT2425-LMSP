@@ -42,5 +42,5 @@
         <maven.compiler.target>23</maven.compiler.target>
         <exec.mainClass>com.aem.accesosqlite.AccesoBBDD</exec.mainClass>
     </properties>
-    <name>accesoOracle</name>
+    <name>accesoOracleC</name>
 </project>
