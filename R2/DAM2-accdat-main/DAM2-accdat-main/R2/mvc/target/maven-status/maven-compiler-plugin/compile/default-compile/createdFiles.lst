@@ -1,0 +1,7 @@
+com\break4learning\mvc\vista\VentanaConversor.class
+com\break4learning\mvc\vista\InterfazVista.class
+com\break4learning\mvc\modelo\Conversor.class
+com\break4learning\mvc\controlador\ControlConversor.class
+com\break4learning\mvc\vista\VentanaConversorTexto.class
+com\break4learning\mvc\Mvc.class
+com\break4learning\mvc\modelo\ConversorEurosPesetas.class

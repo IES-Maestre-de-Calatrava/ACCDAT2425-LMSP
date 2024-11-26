@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.break4learning.mvc"},{"l":"com.break4learning.mvc.controlador"},{"l":"com.break4learning.mvc.modelo"},{"l":"com.break4learning.mvc.vista"}];updateSearchResults();

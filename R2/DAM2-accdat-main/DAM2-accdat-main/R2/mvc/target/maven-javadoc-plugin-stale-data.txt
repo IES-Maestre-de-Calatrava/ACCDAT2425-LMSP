@@ -1,0 +1,52 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+-encoding
+'UTF-8'
+-protected
+-source
+'20'
+-sourcepath
+'C:/Users/jgarc/Documents/NetBeansProjects/mvc/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/jgarc/Documents/NetBeansProjects/mvc/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'mvc 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'mvc 1.0-SNAPSHOT API'
+com.break4learning.mvc.controlador
+com.break4learning.mvc.modelo
+com.break4learning.mvc
+com.break4learning.mvc.vista
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\src\main\java = 1725973317082
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\allclasses-index.html = 1725984785051
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\allpackages-index.html = 1725984785055
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\constant-values.html = 1725984784880
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\copy.svg = 1725984785099
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\element-list = 1725984784778
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\help-doc.html = 1725984785091
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\index-all.html = 1725984785080
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\index.html = 1725984785027
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\member-search-index.js = 1725984785062
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\module-search-index.js = 1725984785056
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\overview-summary.html = 1725984785086
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\overview-tree.html = 1725984785019
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\package-search-index.js = 1725984785058
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\script.js = 1725984785096
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\search-page.js = 1725984785104
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\search.html = 1725984785084
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\search.js = 1725984785102
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\serialized-form.html = 1725984784922
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\stylesheet.css = 1725984785094
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\tag-search-index.js = 1725984785063
+C:\Users\jgarc\Documents\NetBeansProjects\mvc\target\reports\apidocs\type-search-index.js = 1725984785060

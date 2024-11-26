@@ -11,6 +11,8 @@ import java.awt.BorderLayout;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -111,6 +113,8 @@ public class Empleados {
            
             OperacionesBBDD bbdd = OperacionesBBDD.getInstance();
             ResultSet rs =bbdd.select("SELECT emp_no FROM empleados WHERE emp_no = ? ", this.dir).get();
+            SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy");
+            
             if(rs.next()){
                 if(getSalario()<=0){
                     System.out.println("El salario debe ser mayor que 0");
@@ -118,6 +122,9 @@ public class Empleados {
                 else if(this.apellido == null || this.apellido.isEmpty()||this.oficio == null || this.oficio.isEmpty()){
                     System.out.println("El apellido o el oficio no pueden ser nulos o vacios");
                 }
+//                else if(this.fechaAlta !=  ){
+//                    
+//                }
                 else{
 
                     bbdd.insert("insert into Empleados values (?,?,?,?,?,?,?,?)", getEmpNo(), getApellido(), getOficio(), getDir(), getFechaAlta(), getSalario(), getComision(), getDepNo());
@@ -139,11 +146,17 @@ public class Empleados {
                     System.out.println("Ese numero de departamento no existe");
                     break;
                 }
+                default:{
+                    System.out.println ("Ha ocurrido un error:");
+                    System.out.println ("Mensaje: " +ex.getMessage());
+                    System.out.println ("SQL Estado: " +ex.getSQLState());
+                    System.out.println ("Código de error: " +ex.getErrorCode());
+                }
             }
-            System.out.println ("Ha ocurrido un error:");
-            System.out.println ("Mensaje: " +ex.getMessage());
-            System.out.println ("SQL Estado: " +ex.getSQLState());
-            System.out.println ("Código de error: " +ex.getErrorCode());
+//            System.out.println ("Ha ocurrido un error:");
+//            System.out.println ("Mensaje: " +ex.getMessage());
+//            System.out.println ("SQL Estado: " +ex.getSQLState());
+//            System.out.println ("Código de error: " +ex.getErrorCode());
             //Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
