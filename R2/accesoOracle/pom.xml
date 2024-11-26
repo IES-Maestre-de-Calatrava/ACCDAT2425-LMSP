@@ -33,5 +33,5 @@
         <maven.compiler.target>23</maven.compiler.target>
         <exec.mainClass>com.aem.accesosqlite.AccesosOracle</exec.mainClass>
     </properties>
-    <name>accesosOracle</name>
+    <name>accesosOracleV</name>
 </project>

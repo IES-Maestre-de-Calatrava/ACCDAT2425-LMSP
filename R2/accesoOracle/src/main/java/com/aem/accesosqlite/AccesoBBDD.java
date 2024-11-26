@@ -20,7 +20,7 @@ public class AccesoBBDD {
         
         Departamento departamento = new Departamento(4,"Administracion","Toledo");
         
-        bbdd.abrirConexion();
+        bbdd.conectarOracle();
      
         
          Empleado.selectMaxSalario(bbdd);
@@ -47,7 +47,7 @@ public class AccesoBBDD {
 //        System.out.println("");
 //        bbdd.obtenerNumeroFilasDevueltas(Departamento.selectAll(bbdd));
 //        
-        bbdd.cerrarConexion();
+        bbdd.cierraConexion();
         
     }
 

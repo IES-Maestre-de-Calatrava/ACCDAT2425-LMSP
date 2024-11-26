@@ -23,11 +23,11 @@ public class AccesoBBDD {
         bbdd.abrirConexion();
      
         
-         Empleado.selectMaxSalario(bbdd);
+         //Empleado.selectMaxSalario(bbdd);
          
-         Empleado.updateSalario(bbdd);
+         //Empleado.updateSalario(bbdd,10);
          
-         Empleado.updateSalarioPorcentaje(bbdd, 20, 50);
+         //Empleado.updateSalarioPorcentaje(bbdd, 20, 50);
          
          
         

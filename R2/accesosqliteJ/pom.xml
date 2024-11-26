@@ -27,4 +27,5 @@
         <maven.compiler.target>23</maven.compiler.target>
         <exec.mainClass>com.aem.accesosqlite.Accesosqlite</exec.mainClass>
     </properties>
+    <name>accesossqliteL</name>
 </project>

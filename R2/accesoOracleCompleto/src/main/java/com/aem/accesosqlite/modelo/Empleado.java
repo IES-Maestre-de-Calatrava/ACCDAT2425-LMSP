@@ -146,10 +146,10 @@ public class Empleado {
         
     }
     
-    public static void updateSalario(OperacionesBBDD bbdd) {
+    public static void updateSalario(OperacionesBBDD bbdd, int nDept) {
         int aumentoSalario = 100;
 //        String sqlSelect = "SELECT * FROM EMPLEADOS WHERE DEPT_NO = 10";
-          String sql = "UPDATE EMPLEADOS SET salario = salario + ? WHERE dept_no = 15";
+          String sql = "UPDATE EMPLEADOS SET salario = salario + ? WHERE dept_no ="+nDept;
         
         try {
             
