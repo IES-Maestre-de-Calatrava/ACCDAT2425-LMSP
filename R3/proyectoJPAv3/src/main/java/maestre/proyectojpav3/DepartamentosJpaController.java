@@ -25,12 +25,12 @@ import maestre.proyectojpav3.exceptions.PreexistingEntityException;
  * Created on 29 nov 2024
  */
 public class DepartamentosJpaController implements Serializable {
-
+    private EntityManagerFactory emf = null;
+    
     public DepartamentosJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private EntityManagerFactory emf = null;
-
+    
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }

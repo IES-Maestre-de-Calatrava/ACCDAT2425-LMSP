@@ -23,10 +23,12 @@ public class ProyectoJPAv3 {
         try {
             emfactory = Persistence.createEntityManagerFactory("maestre_proyectoJPAv3_jar_1.0-SNAPSHOTPU");
             DepartamentosJpaController departamentosJpaController = new DepartamentosJpaController(emfactory);
+            //entitymanager = departamentosJpaController.getEntityManager();
+            //entitymanager.createQuery("select dnombre from departamentos;");
             Departamentos departamentos = new Departamentos();
-            departamentos.setDeptNo((short)99);
-            departamentos.setDnombre("Pruebas");
-            departamentos.setLoc("Madrid");
+            departamentos.setDeptNo((short)100);
+            departamentos.setDnombre("Direccion");
+            departamentos.setLoc("Ciudad Real");
             departamentosJpaController.create(departamentos);
         } catch (Exception ex) {
             Logger.getLogger(ProyectoJPAv3.class.getName()).log(Level.SEVERE, null, ex);
