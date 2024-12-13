@@ -10,11 +10,15 @@ import jakarta.persistence.EntityManagerFactory;
 import java.io.Serializable;
 import jakarta.persistence.Query;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import static maestre.proyectojpav3.ProyectoJPAv3.departamentos;
+import static maestre.proyectojpav3.ProyectoJPAv3.emanager;
 import maestre.proyectojpav3.exceptions.NonexistentEntityException;
 import maestre.proyectojpav3.exceptions.PreexistingEntityException;
 
@@ -180,6 +184,7 @@ public class DepartamentosJpaController implements Serializable {
             em.close();
         }
     }
+    
 
     public int getDepartamentosCount() {
         EntityManager em = getEntityManager();
@@ -193,5 +198,6 @@ public class DepartamentosJpaController implements Serializable {
             em.close();
         }
     }
+    
 
 }
