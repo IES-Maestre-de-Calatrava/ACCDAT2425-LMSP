@@ -8,6 +8,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,25 +34,31 @@ public class ProyectoJPAv3 {
     public static void main(String[] args) {
         try {
             inicializaFactory();
-            DepartamentosJpaController departamentosJpaController = new DepartamentosJpaController(emfactory);
-            Departamentos departamentos = new Departamentos();
-            departamentos.setDeptNo((short)77);
-            departamentos.setDnombre("BIG DATA");
-            departamentos.setLoc("TALAVERA");
-            departamentos.setEmpleadosCollection(null);
-            Empleados emp = new Empleados();
-            Collection<Empleados> empleadosCollection = new ArrayList<Empleados>();
-            emp.setEmpNo((short)7777);
-            emp.setApellido("ROBLES");
-            emp.setSalario(BigDecimal.valueOf(2000));
-            emp.setOficio("ANALISTA");
-            emp.setDir((short)7839);
+            //modificarDepartamento(30);
+//            contarNumeroDepartamentos();
+//            listarUnDepartamento();
+//            insertaDepartamentoConEmpleado();
+//            cierraFactoryController();
             
-            //empleadosCollection.add(emp);
-            departamentos.setEmpleadosCollection(empleadosCollection);
-            
-            
-            departamentosJpaController.create(departamentos);
+//            DepartamentosJpaController departamentosJpaController = new DepartamentosJpaController(emfactory);
+//            Departamentos departamentos = new Departamentos();
+//            departamentos.setDeptNo((short)77);
+//            departamentos.setDnombre("BIG DATA");
+//            departamentos.setLoc("TALAVERA");
+//            departamentos.setEmpleadosCollection(null);
+//            Empleados emp = new Empleados();
+//            Collection<Empleados> empleadosCollection = new ArrayList<Empleados>();
+//            emp.setEmpNo((short)7777);
+//            emp.setApellido("ROBLES");
+//            emp.setSalario(BigDecimal.valueOf(2000));
+//            emp.setOficio("ANALISTA");
+//            emp.setDir((short)7839);
+//            
+//            //empleadosCollection.add(emp);
+//            departamentos.setEmpleadosCollection(empleadosCollection);
+//            
+//            
+//            departamentosJpaController.create(departamentos);
 
 
 //            leerUnRegistroBloqueando();
@@ -71,13 +80,15 @@ public class ProyectoJPAv3 {
             
             //modificarDatos(22,"DAIMIEL");
       
+            //consultaSimple();
+            consultaVariosCampos();
             cierraFactory();
         } catch (Exception ex) {
             Logger.getLogger(ProyectoJPAv3.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     /**
-     * Bloque Entity Manager Factory
+     * B) Ejemplos utilizando JPACONTROLER
      */
     public static void inicializaFactory(){
         emfactory = Persistence.createEntityManagerFactory("maestre_proyectoJPAv3_jar_1.0-SNAPSHOTPU");
@@ -87,6 +98,7 @@ public class ProyectoJPAv3 {
         emanager.close();
         emfactory.close();
     }
+    
     /**
      * Fin bloque Entity Manager Factory
      */
@@ -201,5 +213,86 @@ public class ProyectoJPAv3 {
             Logger.getLogger(ProyectoJPAv3.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    public static void cierraFactoryController(){
+        emfactory.close();
+    }
+    public static void insertaDepartamento(short deptN, String nombre, String loc){
+        try {
+            DepartamentosJpaController departamentosJpaController = new DepartamentosJpaController(emfactory);
+            Departamentos departamentos = new Departamentos();
+            departamentos.setDeptNo(deptN);
+            departamentos.setDnombre(nombre);
+            departamentos.setLoc(loc);
+            departamentosJpaController.create(departamentos);
+        } catch (Exception ex) {
+            Logger.getLogger(ProyectoJPAv3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void insertaDepartamentoConEmpleado(){
+        try {
+            DepartamentosJpaController departamentosJpaController = new DepartamentosJpaController(emfactory);
+            Departamentos departamentos = new Departamentos();
+            departamentos.setDeptNo((short)71);
+            departamentos.setDnombre("BIG DATA");
+            departamentos.setLoc("TALAVERA");
+           
+            Empleados emp = new Empleados((short)7521);
+            Collection<Empleados> empleadosCollection = new ArrayList<Empleados>();
+            empleadosCollection.add(emp);
+            
+            departamentos.setEmpleadosCollection(empleadosCollection);
+            
+            
+            //empleadosCollection.add(emp);
+            departamentos.setEmpleadosCollection(empleadosCollection);
+            
+            
+            departamentosJpaController.create(departamentos);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ProyectoJPAv3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void contarNumeroDepartamentos(){
+        DepartamentosJpaController departamentosJpaController = new DepartamentosJpaController(emfactory);
+        int nElementos = departamentosJpaController.getDepartamentosCount();
+        System.out.println("Nº de departamentos: "+nElementos);
+    }
+    public static void listarUnDepartamento(){
+        DepartamentosJpaController departamentosJpaController = new DepartamentosJpaController(emfactory);
+        Departamentos dep = departamentosJpaController.findDepartamentos((short)10);
+        System.out.println(dep.getDnombre());
+    }
+    public static void modificarDepartamento(int id){
+        DepartamentosJpaController departamentosJpaController = new DepartamentosJpaController(emfactory);
+        Departamentos dep = departamentosJpaController.findDepartamentos((short)id);
+        dep.setLoc("Valencia");
+        try {
+            departamentosJpaController.edit(dep);
+        } catch (Exception ex) {
+            Logger.getLogger(ProyectoJPAv3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    /**
+     * C) EJEMPLOS UTILIZANDO JPQL
+     */
+           /*------------------------------------------------------------------
+                Pruebas de lectura
+            ---------------------------------------------------------*/
+    public static void consultaSimple(){
+        Query query = emanager.createQuery("select UPPER(d.dnombre) from Departamentos d");
+        List<String> list = query.getResultList();
+        for(String e:list){
+            System.out.println("Nombre departamento: "+e);
+        }
+    }
+    public static void consultaVariosCampos(){
+        TypedQuery<Object[]> query = emanager.createQuery("select d.dnombre, d.loc from Departamentos d", Object[].class);
+        List<Object[]> list = query.getResultList();
+        for(Object[] e:list){
+            System.out.println("Nombre departamento: "+e[0]);
+            System.out.println("Localidad: "+e[1]);
+        }
     }
 }
