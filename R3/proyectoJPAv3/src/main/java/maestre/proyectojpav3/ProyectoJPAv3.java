@@ -10,6 +10,9 @@ import jakarta.persistence.LockModeType;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,8 +83,11 @@ public class ProyectoJPAv3 {
             
             //modificarDatos(22,"DAIMIEL");
       
-            //consultaSimple();
-            consultaVariosCampos();
+            consultaSimple();
+            //consultaVariosCampos();
+            
+            //consultaConCriteriaQueryVariosCampos();
+            //borrarDatosConJPQL();
             cierraFactory();
         } catch (Exception ex) {
             Logger.getLogger(ProyectoJPAv3.class.getName()).log(Level.SEVERE, null, ex);
@@ -294,5 +300,48 @@ public class ProyectoJPAv3 {
             System.out.println("Nombre departamento: "+e[0]);
             System.out.println("Localidad: "+e[1]);
         }
+    }
+    //Consultas con Criteriaquery
+    public static void consultaConCriteriaQuery(){
+        CriteriaBuilder cb = emanager.getCriteriaBuilder();
+        CriteriaQuery<Departamentos> query = cb.createQuery(Departamentos.class);
+        Root<Departamentos> c = query.from(Departamentos.class);//Especificamos el from
+                                query.select(c);//Indicamos los cmapos a seleccionar
+        List<Departamentos> list = emanager.createQuery(query).getResultList();
+        for(Departamentos e:list){
+            System.out.println("Nombre del departamento: "+e.getDnombre());
+        }
+    }
+    public static void consultaConCriteriaQueryVariosCampos(){
+        CriteriaBuilder cb = emanager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> query = cb.createQuery(Object[].class);
+        Root<Departamentos> c = query.from(Departamentos.class);//Especificamos el from
+                                query.select(cb.array(c.get("dnombre"), c.get("loc")));//Indicamos los cmapos a seleccionar
+        List<Object[]> list = emanager.createQuery(query).getResultList();
+        for(Object[] e:list){
+            System.out.println("Nombre del departamento: "+e[0]);
+            System.out.println("Nombre de localidad: "+e[1]);
+        }
+    }
+            /*------------------------------------------------------------------
+                Pruebas de modificacion y borrado con JPQL
+            ---------------------------------------------------------*/
+    public static void modificarConJPQL(){
+        Query query = emanager.createQuery("UPDATE Departamentos d SET d.dnombre= :valorNuevo WHERE d.deptNo = :deptNoV");
+        query.setParameter("valorNuevo", "PRUEBAS");
+        query.setParameter("deptNoV", (short)77);
+        
+        emanager.getTransaction().begin();
+        int updateCount = query.executeUpdate();
+        emanager.getTransaction().commit();
+    }
+    public static void borrarDatosConJPQL(){
+        Query query = emanager.createQuery("DELETE from Departamentos d  WHERE d.deptNo = :deptNoV");
+       
+        query.setParameter("deptNoV", (short)77);
+        
+        emanager.getTransaction().begin();
+        int deleteCount = query.executeUpdate();
+        emanager.getTransaction().commit();
     }
 }
