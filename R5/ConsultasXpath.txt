@@ -1,0 +1,13 @@
+1./productos/produc/denominacion | /productos/produc/precio
+2./productos/produc[starts-with(denominacion,'Placa Base')]
+3./productos/produc[precio>60 and cod_zona=20]
+4./productos/produc[starts-with(denominacion,'Memoria') and cod_zona=10]
+5.format-number(avg(/productos/produc[starts-with(denominacion,'Micro')]/precio),'99.99')
+6./productos/produc[number(stock_minimo) > number(stock_actual)]
+7.
+8.
+9.
+10.
+11.
+12.
+13.
