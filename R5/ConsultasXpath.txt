@@ -1,13 +1,25 @@
-1./productos/produc/denominacion | /productos/produc/precio
+1./productos/produc/denominacion | /productos/produc/precio; /productos/produc/denominacion | precio
 2./productos/produc[starts-with(denominacion,'Placa Base')]
 3./productos/produc[precio>60 and cod_zona=20]
-4./productos/produc[starts-with(denominacion,'Memoria') and cod_zona=10]
+4.count(/productos/produc[starts-with(denominacion,'Memoria') and cod_zona=10])
 5.format-number(avg(/productos/produc[starts-with(denominacion,'Micro')]/precio),'99.99')
 6./productos/produc[number(stock_minimo) > number(stock_actual)]
-7.
-8.
-9.
-10.
-11.
+7./productos/produc[number(stock_minimo)> number(stock_actual) and cod_zona=40]/denominacion/text() | /productos/produc[number(stock_minimo)> number(stock_actual) and cod_zona=40]/precio/text()
+/productos/produc[number(stock_minimo)> number(stock_actual) and cod_zona=40]/concat(denominacion," precio: ",precio)
+8./productos/produc[precio = max(precio)]
+9./productos/produc[cod_zona=20 and precio = min(precio)]
+10./productos/produc[cod_zona=10 and precio = max(precio)]
+
+
+
+
+11./sucursales/sucursal/cuenta[@tipo="AHORRO"]
 12.
 13.
+Obtener todos los elementos de las sucursales con más de 3 cuentas. /sucursales/sucursal[count(cuenta)>3]
+Obtener todos los elementos de las sucursales con más de 3 cuentas del tipo AHORRO. /sucursales/sucursal[count(cuenta[@tipo = "AHORRO"])>3]
+Obtener los nodos del director y la población de las sucursales con más de 3 cuentas./sucursales/sucursal[count(cuenta)>3]/(director | poblacion)
+Obtener el número de sucursales cuya población sea Madrid.count(/sucursales/sucursal[poblacion = "Madrid"])
+Obtener por cada sucursal, su código y la suma de las aportaciones de las cuentas del tipo PENSIONES./sucursales/sucursal/concat(@codigo," aportacion ",sum(cuenta[@tipo = "PENSIONES"]/aportacion))
+Obtener los nodos número de cuenta, nombre de cuenta y el saldo haber de las cuentas con saldo haber mayor de 10000./sucursales/sucursal/cuenta[saldohaber > 10000]/(numero|nombre|saldohaber)
+Obtener por cada sucursal con más de 3 cuentas del tipo AHORRO, su código y la suma del saldo debe de esas cuentas.
