@@ -1,0 +1,121 @@
+-----------------------------------------------------
+--NOMBRE Y APELLIDOS:Lucas Manuel Serrano Pérez
+--NOTA:
+--OBSERVACIONES:
+----------------------------------------------------
+
+-----------------------------------------------------
+--EJERCICIO 1:
+--NOTA:
+--OBSERVACIONES:
+-----------------------------------------------------
+--Escribe aquí tu respuesta:
+CREATE OR REPLACE TYPE piloto AS OBJECT (
+        dni                  VARCHAR2(9),
+        horas_de_vuelo       NUMBER(6),
+        horas_de_vuelo_anual NUMBER(6)
+);
+
+-----------------------------------------------------
+--EJERCICIO 2:
+--NOTA:
+--OBSERVACIONES:
+-----------------------------------------------------
+--Escribe aquí tu respuesta:
+CREATE OR REPLACE TYPE vuelo AS OBJECT (
+        idvuelo      NUMBER(10),
+        compañia     VARCHAR2(30),
+        piloto_avion piloto,
+        MEMBER PROCEDURE vuelo_datos,
+        CONSTRUCTOR FUNCTION vuelo (
+               idvuelo   NUMBER,
+               compañia VARCHAR2
+           ) RETURN SELF AS RESULT
+) NOT FINAL;
+/
+CREATE OR REPLACE TYPE BODY vuelo AS
+    MEMBER PROCEDURE vuelo_datos IS
+    BEGIN
+        dbms_output.put_line('El idVuelo es: ' || self.idvuelo);
+        dbms_output.put_line('Dni del piloto: ' || self.piloto_avion.dni);
+    END;
+
+    CONSTRUCTOR FUNCTION vuelo (
+        idvuelo   NUMBER,
+        compañia VARCHAR2
+    ) RETURN SELF AS RESULT IS
+    BEGIN
+        self.idvuelo := idvuelo;
+        self.compañia := compañia;
+        RETURN;
+    END;
+
+END;
+
+-----------------------------------------------------
+--EJERCICIO 3:
+--NOTA:
+--OBSERVACIONES:
+-----------------------------------------------------
+--Escribe aquí tu respuesta:
+CREATE OR REPLACE TYPE vuelo_mercancias UNDER vuelo (
+        kilos_de_carga  NUMBER(5),
+        precio_por_kilo NUMBER(2),
+        OVERRIDING MEMBER PROCEDURE vuelo_datos,
+        MEMBER FUNCTION coste_transporte RETURN NUMBER
+);
+/
+CREATE OR REPLACE TYPE BODY vuelo_mercancias AS 
+    OVERRIDING MEMBER PROCEDURE vuelo_datos IS
+    BEGIN
+        dbms_output.put_line('El idVuelo es: ' || self.idvuelo);
+        dbms_output.put_line('Dni del piloto: ' || self.piloto_avion.dni);
+        dbms_output.put_line('Los kilos de carga: ' || self.kilos_de_carga);
+    END;
+
+    MEMBER FUNCTION coste_transporte RETURN NUMBER IS
+    BEGIN
+        RETURN self.kilos_de_carga * self.precio_por_kilo;
+    END;
+
+END;
+
+-----------------------------------------------------
+--EJERCICIO 4:
+--NOTA:
+--OBSERVACIONES:
+-----------------------------------------------------
+--Escribe aquí tu respuesta:
+CREATE TABLE t_vuelos_mercancias OF vuelo_mercancias (
+    idvuelo PRIMARY KEY
+);
+
+
+-----------------------------------------------------
+--EJERCICIO 5:
+--NOTA:
+--OBSERVACIONES:
+-----------------------------------------------------
+--Escribe aquí tu respuesta:
+CREATE OR REPLACE TYPE t_anidada_vuelos_mercancias AS
+    TABLE OF vuelo_mercancias;
+/
+CREATE TABLE t_rutas (
+    idruta  NUMBER(5) PRIMARY KEY,
+    origen  VARCHAR2(100),
+    destino VARCHAR2(100),
+    vuelos  t_anidada_vuelos_mercancias
+)
+NESTED TABLE vuelos STORE AS t_vuelos_anidados;
+
+
+-----------------------------------------------------
+--EJERCICIO 6:
+--NOTA:
+--OBSERVACIONES:
+-----------------------------------------------------
+--Escribe aquí tu respuesta:
+
+
+
+-----------------------------------------------------
