@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package maestre.existdb;
+package accdat.ej1universidades;
 
 import java.io.StringWriter;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.OutputKeys;
@@ -23,12 +24,13 @@ import javax.xml.xquery.XQResultItem;
 import javax.xml.xquery.XQResultSequence;
 import net.xqj.exist.ExistXQDataSource;
 import org.w3c.dom.Node;
+
 /**
  *
- * @author LMSP by Lucas Manuel Serrano Perez
+ * @author USUARIO
  */
-public class ExistDb {
-    //variables de conexion
+public class Ej1universidades {
+//variables de conexion
     private static XQDataSource server;
     private static XQConnection con;
     //Transformer
@@ -44,12 +46,12 @@ public class ExistDb {
             transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,"yes");
         } catch (TransformerConfigurationException ex) {
-            Logger.getLogger(ExistDb.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ej1universidades.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //consulta("/EMPLEADOS");
-        //consultaSinNamespace("/EMPLEADOS");
-        
+        //addEmple(2);
+        //subeSalario(100);
+        verEmpleadosDepartamento();
         desconecta();
     }
     private static void conecta(){
@@ -62,14 +64,14 @@ public class ExistDb {
             server.setProperty("password", "dam2");
             con = server.getConnection();
         } catch (XQException ex) {
-            Logger.getLogger(ExistDb.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ej1universidades.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     private static void desconecta(){
         try {
             con.close();
         } catch (XQException ex) {
-            Logger.getLogger(ExistDb.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ej1universidades.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //para quitar namespace
@@ -80,28 +82,12 @@ public class ExistDb {
             node = (Node)item.getNode();
             transformer.transform(new DOMSource(node), new StreamResult(writer));
         } catch (XQException ex) {
-            Logger.getLogger(ExistDb.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ej1universidades.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TransformerException ex) {
-            Logger.getLogger(ExistDb.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ej1universidades.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return writer.toString();
-    }
-    private static void consulta(String textoConsulta){
-        try {
-            XQPreparedExpression consulta;
-            XQResultSequence resultado;
-            consulta = con.prepareExpression(textoConsulta);
-            resultado = consulta.executeQuery();
-            
-            XQResultItem rItem;
-            while(resultado.next()){
-                rItem = (XQResultItem) resultado.getItem();
-                System.out.println(rItem.getItemAsString(null));
-            }
-        } catch (XQException ex) {
-            Logger.getLogger(ExistDb.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     private static void modificacion(String textoDML){
         try {
@@ -109,7 +95,7 @@ public class ExistDb {
             expresion = con.createExpression();
             expresion.executeCommand(textoDML);
         } catch (XQException ex) {
-            Logger.getLogger(ExistDb.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ej1universidades.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     private static void consultaSinNamespace(String textoConsulta){
@@ -125,10 +111,50 @@ public class ExistDb {
                 System.out.println(eliminarNamespace(rItem));
             }
         } catch (XQException ex) {
-            Logger.getLogger(ExistDb.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ej1universidades.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private boolean existeNodo (String inputConsulta) {
+    
+    private static void addEmple(int pos){
+        int salario = 2340;
+        String puesto = "Técnico";
+        String nombre = "Pedro Fraile";
+        
+        String textoDML = "update insert \n" +
+        " <empleado salario='"+salario+"'>\n" +
+            " <puesto>"+puesto+"</puesto>\n" +
+            " <nombre>"+nombre+"</nombre>\n" +
+        " </empleado>\n" +
+        "into /universidad/departamento["+pos+"]";
+        modificacion(textoDML);
+    }
+    private static void subeSalario(int cantidad){
+        String textoDML = "for $em in /universidad/departamento[codigo='MAT1']/empleado\n" +
+        "let $sal := data($em/@salario)\n" +
+        "return update value $em/@salario\n" +
+        "with data($sal)+"+cantidad;
+        modificacion(textoDML);
+    }
+    private static void verEmpleadosDepartamento(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Introduce departamento:");
+        String dep = scanner.nextLine();
+        if(existeDep(dep)){
+            String consulta = "/universidad/departamento[codigo='"+dep+"']/empleado";
+            consultaSinNamespace(consulta);
+        }else{
+            System.out.println("Lo siento, no existe ese departamento");
+        }
+    }
+    private static boolean existeDep(String dep){
+        boolean existe=false;
+        String consulta = "/universidad/departamento[codigo = '"+dep+"']";
+        if(existeNodo(consulta)){
+            existe = true;
+        }
+        return existe;
+    }
+    private static boolean existeNodo (String inputConsulta) {
         boolean nodoExiste = false;
     
         try {
@@ -138,13 +164,11 @@ public class ExistDb {
       
             if (xqResultado.next() && xqResultado.getBoolean()) {
                 nodoExiste = true;
-            } 
-      
+            }
         } catch (XQException ex) {
             ex.printStackTrace();
         }
     
         return nodoExiste;
   }
-    
 }
