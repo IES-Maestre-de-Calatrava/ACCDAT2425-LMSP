@@ -1,0 +1,230 @@
+MAIN
+ public static void main(String[] args) {
+        InterfazExamen vista = new ExamenVistaTexto();
+        Examen modelo = new Examen("productos");
+        
+        ControladorExamen controlador = new ControladorExamen(vista, modelo);
+        vista.arranca();   
+    }
+
+CONTROLADOR LLAMADO CONTROLADOR EXAMEN
+public class ControladorExamen implements ActionListener{
+
+    private final InterfazExamen vista;
+    private final Examen modelo;
+    
+    public ControladorExamen(InterfazExamen vista,Examen modelo) {
+        this.modelo=modelo;
+        this.vista=vista;
+        
+        this.vista.setControladorE(this);
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        modelo.cargarArchivoEnMemoria("./RESOURCES/listaCompra.xml");
+        
+        String producto=vista.leerProducto();
+        int cantidad = vista.leerCantidad();
+        String supermercado=vista.leerSupermercado();
+        
+        Element elem = modelo.addNodo("producto");
+        modelo.addNodoYTexto("nombre", producto, elem);
+        modelo.addNodoYTexto("cantidad", Integer.toString(cantidad), elem);
+        modelo.addNodoYTexto("supermercado", supermercado, elem);
+        modelo.generarArchivodelDOM("./RESOURCES/listaCompra.xml");
+    }
+
+MODELO
+
+public class Examen {
+
+    Document documento;
+    DocumentBuilderFactory factory;
+    DocumentBuilder builder;
+    
+    public Examen(String nombre) {
+        try {
+            factory=DocumentBuilderFactory.newInstance(); //factory es con .getInstance
+            builder=factory.newDocumentBuilder();//Creamos un constructor de documentos
+            
+            DOMImplementation implementation = builder.getDOMImplementation();//Se necesita para crear el documento
+            this.documento = (Document) implementation.createDocument(null, nombre, null);//Asi se crea el nodo principal
+            this.documento.setXmlVersion("1.0");//siempre la version 1.0
+            
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(Examen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Element addNodo(String nombreNodo){
+        //Asi creamos un nodo (un elemento hijo) para empleados
+        Element nodoPrincipal = this.documento.createElement(nombreNodo);
+        //Lo añado al documento
+        documento.getDocumentElement().appendChild(nodoPrincipal);
+        
+        return nodoPrincipal;
+    }
+    
+    public Element addNodo(String datoEmple, Element elementoPadre){
+        Element dato = this.documento.createElement(datoEmple);
+        elementoPadre.appendChild(dato);
+        return dato;
+    }
+    
+    public void addNodoYTexto(String datoEmple, String texto, Element raiz){
+        //Creamos un elemento hijo
+        Element dato = this.documento.createElement(datoEmple);
+        //Le meto valor al elemento
+        Text textoDato= this.documento.createTextNode(texto);
+        //Primero al nodo le meto los datos
+        dato.appendChild(textoDato);
+        //Y luego meto el nodo en el elemento raiz
+        raiz.appendChild(dato);
+    }
+    public void cargarArchivoEnMemoria(String nombreArchivo){
+        try {
+            //Para leer un archivo XML necesitamos usar el .parse()
+            //de esta manera cargamos el archivo en memoria
+            this.documento = this.builder.parse(new File(nombreArchivo));
+            //Normalizamos el documento, hay que hacerlo
+            this.documento.getDocumentElement().normalize();
+            //El archivo ya esta cargado en memoria y listo para imprimir ande toque
+        } catch (SAXException | IOException ex) {
+            Logger.getLogger(Examen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void generarArchivodelDOM(String nombreArchivo){
+        try {
+            
+            Source source = new DOMSource(this.documento);
+            Result salida = new StreamResult(new File(nombreArchivo));
+            preProcess("yes").transform(source, salida);
+            
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(Examen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(Examen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private Transformer preProcess(String indent){
+        Transformer transformer =null;
+        try {
+            //Creo el transformer para luego poder llamarlo en mostrar pantalla
+            transformer = TransformerFactory.newInstance().newTransformer();
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(Examen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //La linea de abajo da formato al XML
+        transformer.setOutputProperty(OutputKeys.INDENT, indent);
+        return transformer;
+    }
+
+VISTA
+CLASE EXAMENVISTATEXTO
+public class ExamenVistaTexto implements InterfazExamen{
+
+    private ControladorExamen controlador;
+    
+    private BufferedReader in = new BufferedReader (new InputStreamReader(System.in));
+    
+    @Override
+    public void arranca() {
+        procesaNuevaOperacion();
+    }
+    
+    private void solicitaOperacion() {
+        System.out.println("=============================================================");
+        System.out.println("0. Salir");
+        System.out.println("1. Modificar lista de la compra");
+        System.out.print("Introduzca la opcion: ");
+    }
+    
+    private void procesaNuevaOperacion() {
+        int operacion;
+        solicitaOperacion();
+        operacion = leeOpcion();
+        switch (operacion) {
+            case 0 -> {
+                System.out.println("Ejecucion finalizada");
+                System.exit(0);
+            }
+            case 1 -> controlador.actionPerformed(new ActionEvent(this, operacion, MODIFICARLISTA));
+
+//            default -> operacionIncorrecta();
+        }
+        procesaNuevaOperacion();
+    }
+    
+    private int leeOpcion() {
+        String s = null;
+        try {
+            s = in.readLine();
+            return Integer.parseInt(s);
+        } catch (IOException | NumberFormatException e) {
+            operacionIncorrecta();
+            return 0;
+        }
+    }
+    
+    private void operacionIncorrecta() {
+        System.out.print("Operación incorrecta. ");
+        procesaNuevaOperacion();
+    }
+
+    @Override
+    public void setControladorE(ControladorExamen controlador) {
+        this.controlador = controlador;
+    }
+
+    @Override
+    public String leerProducto() {
+        System.out.println("Introduce nombre del producto: ");
+        String producto = "NO ESPECIFICADO";
+        try {
+            producto = in.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(ExamenVistaTexto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return producto;
+    }
+
+    @Override
+    public int leerCantidad() {
+
+        System.out.println("Introduce la cantidad: ");
+        int cantidad= 0;
+        try {
+            cantidad = in.read();
+        } catch (IOException ex) {
+            Logger.getLogger(ExamenVistaTexto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cantidad;
+
+    }
+
+    @Override
+    public String leerSupermercado() {
+        System.out.println("Introduce nombre del Supermercado: ");
+        String producto = "NO ESPECIFICADO";
+        try {
+            //Declarando de nuevo in me permite solucionar el error en el que
+            //Este paso se lo saltaba y no permitia al usuario introducir el supermercado
+            //insertando asi un supermercado vacio en el xml
+            in = new BufferedReader (new InputStreamReader(System.in));
+            producto = in.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(ExamenVistaTexto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return producto;
+    }
+
+}
+CLASE INTERFAZVISTA
+void arranca
+setControladorE(ControladorExamen controlador)
+public int leerCantidad()
+public String leerSupermercado()
+static final String MODIFICARLISTA= "Añade productos a la lista de la compra"
