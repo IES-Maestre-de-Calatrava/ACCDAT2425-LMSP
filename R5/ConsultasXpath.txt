@@ -22,4 +22,5 @@ Obtener los nodos del director y la población de las sucursales con más de 3 c
 Obtener el número de sucursales cuya población sea Madrid.count(/sucursales/sucursal[poblacion = "Madrid"])
 Obtener por cada sucursal, su código y la suma de las aportaciones de las cuentas del tipo PENSIONES./sucursales/sucursal/concat(@codigo," aportacion ",sum(cuenta[@tipo = "PENSIONES"]/aportacion))
 Obtener los nodos número de cuenta, nombre de cuenta y el saldo haber de las cuentas con saldo haber mayor de 10000./sucursales/sucursal/cuenta[saldohaber > 10000]/(numero|nombre|saldohaber)
-Obtener por cada sucursal con más de 3 cuentas del tipo AHORRO, su código y la suma del saldo debe de esas cuentas.
+Obtener por cada sucursal con más de 3 cuentas del tipo AHORRO, su código y la suma del saldo debe de esas cuentas. /sucursales/sucursal[count(cuenta[@tipo="AHORRO"])>3]/concat(@codigo,'
+', sum(cuenta[@tipo='AHORRO']/saldodebe))
